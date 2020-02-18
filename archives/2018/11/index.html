@@ -16,7 +16,7 @@
   <meta name="description" content="There can be miracles when you believe">
   <meta name="author" content="雅俊 Yajun">
   <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
-  <title>归档 ~ TOXIC</title>
+  <title>归档 by TOXIC</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 40vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -95,14 +95,6 @@
             <a class="nav-link" href="/about/">关于</a>
           </li>
         
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/links/">友链</a>
-          </li>
-        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
@@ -144,16 +136,28 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 5 篇文章</p>
+  <p class="h4">共计 14 篇文章</p>
   <hr>
   
     
       
       <p class="h5">2018</p>
     
+    <a href="/infomation-tech/bigdata-spark-02/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">RDD和DataFrame的相互转化</span>
+      <span style="float: right;">11-30</span>
+    </a>
+  
+    
     <a href="/social-science/emotion-management/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">【转载】情绪管理</span>
       <span style="float: right;">11-04</span>
+    </a>
+  
+    
+    <a href="/infomation-tech/bigdata-pandas-01/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Pandas之DataFrame查询选取</span>
+      <span style="float: right;">11-03</span>
     </a>
   
 </div>
@@ -199,9 +203,8 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
     <br>
 
     
@@ -285,7 +288,7 @@
         "归档&nbsp;",
       ],
       cursorChar: "_",
-      typeSpeed: 70,
+      typeSpeed: 80,
       loop: false,
     });
     typed.stop();
@@ -334,18 +337,16 @@
         $(element).attr("data-fancybox", "images");
         $(element).attr("href", $(this).attr("src"));
         $(this).wrap(element);
+
+        var imageTitle = $(this).attr('alt');
+        if (imageTitle){
+          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+        }
       }
     );
   </script>
 
 
-
-  
-
-  
-    <!-- KaTeX -->
-    <link rel="stylesheet" href="/lib/katex/katex.min.css"  >
-  
 
 
 

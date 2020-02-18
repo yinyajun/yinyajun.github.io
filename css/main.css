@@ -250,7 +250,7 @@ body a:hover {
 .wechat-qrcode {
   width: 200px;
   height: 300px;
-  background: url("") no-repeat;
+  background: url("/img/subscribe_img.jpg") no-repeat;
   background-size: 100%;
   position: absolute;
   right: -100px;
@@ -603,4 +603,59 @@ h6::before {
 }
 .tagcloud a:hover {
   color: #1abc9c !important;
+}
+.markdown-body blockquote {
+  border-left: 0.25em solid #529eea;
+  background-color: #f8f9fa;
+  color: #003875;
+  padding: 1em;
+}
+.image-caption {
+  color: #9a9a9a;
+  text-align: center;
+}
+.markdown-body h1,
+.markdown-body h2 {
+  padding-top: 0.5em;
+}
+.container-fluid {
+  width: 98%;
+}
+.mb-1,
+.my-1 {
+  margin-bottom: 0.05rem !important;
+}
+.index-btm {
+  margin-top: 0.5rem;
+}
+footer {
+  background: rgba(76,109,109,0.8);
+  border-top: solid rgba(51,51,51,0.851);
+}
+ins {
+  text-decoration-style: wavy;
+  text-decoration-color: #d48a21;
+}
+em {
+  color: #4a964a;
+}
+s {
+  color: #999;
+}
+.markdown-body b,
+.markdown-body strong {
+  font-weight: 600;
+  color: #f70404;
+}
+.markdown-body table {
+  display: inline-table;
+}
+.v .power,
+.v .power a {
+  display: none;
+}
+#vcomments {
+  width: 100% !important;
+  background-color: rgba(255,255,255,0.812);
+  padding: 1em;
 }

@@ -16,7 +16,7 @@
   <meta name="description" content="There can be miracles when you believe">
   <meta name="author" content="雅俊 Yajun">
   <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
-  <title>标签 - TensorSlow ~ TOXIC</title>
+  <title>标签 - TensorSlow by TOXIC</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 40vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -93,14 +93,6 @@
           
           <li class="nav-item">
             <a class="nav-link" href="/about/">关于</a>
-          </li>
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/links/">友链</a>
           </li>
         
         
@@ -206,9 +198,8 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
     <br>
 
     
@@ -292,7 +283,7 @@
         "标签 - TensorSlow&nbsp;",
       ],
       cursorChar: "_",
-      typeSpeed: 70,
+      typeSpeed: 80,
       loop: false,
     });
     typed.stop();
@@ -341,18 +332,16 @@
         $(element).attr("data-fancybox", "images");
         $(element).attr("href", $(this).attr("src"));
         $(this).wrap(element);
+
+        var imageTitle = $(this).attr('alt');
+        if (imageTitle){
+          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+        }
       }
     );
   </script>
 
 
-
-  
-
-  
-    <!-- KaTeX -->
-    <link rel="stylesheet" href="/lib/katex/katex.min.css"  >
-  
 
 
 

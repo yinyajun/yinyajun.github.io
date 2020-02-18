@@ -16,7 +16,7 @@
   <meta name="description" content="There can be miracles when you believe">
   <meta name="author" content="雅俊 Yajun">
   <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
-  <title>分类 - 信息技术 ~ TOXIC</title>
+  <title>分类 - 信息技术 by TOXIC</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 40vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -95,14 +95,6 @@
             <a class="nav-link" href="/about/">关于</a>
           </li>
         
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/links/">友链</a>
-          </li>
-        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
@@ -144,12 +136,18 @@
                 
 
 <div class="list-group">
-<!--  <p class="h4">共计 2 篇文章</p>-->
+<!--  <p class="h4">共计 9 篇文章</p>-->
   <hr>
   
     
       
       <p class="h5">2019</p>
+    
+    <a href="/infomation-tech/hexo-markdown/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Hexo的markdown cheatsheet</span>
+      <span style="float: right;">09-27</span>
+    </a>
+  
     
     <a href="/infomation-tech/tensorslow-02/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">有趣的TensorSlow(下)</span>
@@ -160,6 +158,45 @@
     <a href="/infomation-tech/tensorslow-01/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">有趣的TensorSlow(上)</span>
       <span style="float: right;">06-01</span>
+    </a>
+  
+    
+    <a href="/infomation-tech/bigdata-spark-05/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Spark性能优化指南—高级篇【转载】</span>
+      <span style="float: right;">04-15</span>
+    </a>
+  
+    
+    <a href="/infomation-tech/bigdata-spark-04/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Spark性能优化指南—基础篇【转载】</span>
+      <span style="float: right;">04-14</span>
+    </a>
+  
+    
+    <a href="/infomation-tech/bigdata-spark-03/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Spark中的聚合和窗口函数</span>
+      <span style="float: right;">03-07</span>
+    </a>
+  
+    
+      
+      <p class="h5">2018</p>
+    
+    <a href="/infomation-tech/bigdata-spark-02/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">RDD和DataFrame的相互转化</span>
+      <span style="float: right;">11-30</span>
+    </a>
+  
+    
+    <a href="/infomation-tech/bigdata-pandas-01/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Pandas之DataFrame查询选取</span>
+      <span style="float: right;">11-03</span>
+    </a>
+  
+    
+    <a href="/infomation-tech/bigdata-spark-01/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Pyspark处理Hive表</span>
+      <span style="float: right;">10-20</span>
     </a>
   
 </div>
@@ -206,9 +243,8 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
     <br>
 
     
@@ -292,7 +328,7 @@
         "分类 - 信息技术&nbsp;",
       ],
       cursorChar: "_",
-      typeSpeed: 70,
+      typeSpeed: 80,
       loop: false,
     });
     typed.stop();
@@ -341,18 +377,16 @@
         $(element).attr("data-fancybox", "images");
         $(element).attr("href", $(this).attr("src"));
         $(this).wrap(element);
+
+        var imageTitle = $(this).attr('alt');
+        if (imageTitle){
+          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+        }
       }
     );
   </script>
 
 
-
-  
-
-  
-    <!-- KaTeX -->
-    <link rel="stylesheet" href="/lib/katex/katex.min.css"  >
-  
 
 
 
