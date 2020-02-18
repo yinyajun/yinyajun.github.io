@@ -654,8 +654,20 @@ s {
 .v .power a {
   display: none;
 }
+.category-tree-list-item {
+  text-align: center;
+}
+.category-tree-list-link {
+  background-image: radial-gradient(rgba(236,234,4,0.478), transparent);
+}
+.category-tree-list {
+  list-style-type: none;
+}
 #vcomments {
   width: 100% !important;
   background-color: rgba(255,255,255,0.812);
   padding: 1em;
+}
+.video-container {
+  text-align: center;
 }
