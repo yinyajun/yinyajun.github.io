@@ -618,6 +618,9 @@ h6::before {
 .markdown-body h2 {
   padding-top: 0.5em;
 }
+.container {
+  width: 98%;
+}
 .container-fluid {
   width: 98%;
 }
@@ -670,4 +673,30 @@ s {
 }
 .video-container {
   text-align: center;
+}
+.drop-cap {
+  float: left;
+  font-size: 3.25em;
+  margin-right: 0.25em;
+  margin-top: 0.1em;
+}
+.about-title {
+  margin-top: 50px;
+  text-align: center;
+  background-image: linear-gradient(90deg, #a166ab 0, #a166ab 40%, #ef4e7b 45%, #f37055 50%, #ef4e7b 55%, #a166ab 60%, #a166ab 100%);
+  background-size: cover;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.about-tagline {
+  padding: 0 3em 1em 3em;
+  line-height: 1.75em;
+  background-image: linear-gradient(90deg, #a166ab 0, #a166ab 40%, #ef4e7b 45%, #f37055 50%, #ef4e7b 55%, #a166ab 60%, #a166ab 100%);
+  background-size: cover;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.about-intro {
+  padding: 0 3em 1em 3em;
+  line-height: 1.75em;
 }
