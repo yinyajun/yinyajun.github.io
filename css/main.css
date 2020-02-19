@@ -631,17 +631,6 @@ h6::before {
 .index-btm {
   margin-top: 0.5rem;
 }
-main {
-  padding-bottom: 7.5em;
-}
-footer {
-  background: rgba(76,109,109,0.8);
-  border-top: solid rgba(51,51,51,0.851);
-  width: 100%;
-  position: absolute;
-  bottom: 0; /*footer的绝对位置*/
-  left: 0;
-}
 ins {
   text-decoration-style: wavy;
   text-decoration-color: #d48a21;
