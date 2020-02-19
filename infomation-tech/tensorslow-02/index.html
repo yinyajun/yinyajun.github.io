@@ -181,7 +181,7 @@ TensorSlow原作者<a href="http://www.deepideas.net/deep-learning-from-scratch-
 <p><em>The source code has been built with maximal understandability in mind, rather than maximal efficiency.</em></p>
 </blockquote>
 <h2 id="perceptron-example"><a class="markdownIt-Anchor" href="#perceptron-example"></a> Perceptron Example</h2>
-<p>  本篇中将使用稍微复杂一点的模型perceptron的计算图为例。首先利用上篇的代码，搭建一个表征Perceptron的计算图。后面将以这个Perceptron为例，介绍TensorSlow如何进行损失计算和反向传播的。值得一提的是，这里的输入和参数已经是向量。</p>
+<p>  本文中将会使用TensorSlow处理稍微复杂一点的模型。首先利用上篇的代码，搭建一个表征Perceptron的计算图。后面将以这个Perceptron为例，介绍TensorSlow如何进行损失计算和反向传播的。值得一提的是，这里的输入和参数已经是向量。</p>
 <p><img src="https://raw.githubusercontent.com/yinyajun/yinyajun.github.io/master/images/figure/perceptron3.png" srcset="/img/loading.gif" alt="Perceptron计算图" /></p>
 <pre class="highlight"><code class="python">Graph().as_default()
 X = placeholder()
@@ -742,8 +742,6 @@ plt.show()
   <script src="/js/post.js" ></script>
 
 
-
-  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
 
