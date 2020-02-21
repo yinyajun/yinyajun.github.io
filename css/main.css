@@ -663,6 +663,7 @@ s {
 }
 .drop-cap {
   font-size: 3em;
+  margin-right: 0.05em;
 }
 .about-title {
   margin-top: 50px;
