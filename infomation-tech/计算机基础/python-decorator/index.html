@@ -1,196 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="description" content="There can be miracles when you believe">
-  <meta name="author" content="雅俊 Yajun">
-  <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
-  <title>Python装饰器 by TOXIC</title>
-
-  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
-<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
-<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
-<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
-
-
-
-  <link rel="stylesheet" href="/lib/prettify/github-v2.min.css"  >
-
-<link rel="stylesheet" href="/css/main.css"  >
-
-
-  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
-
-
-
-<link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
-<meta name="generator" content="Hexo 4.2.0"></head>
-
-
-<body>
-  <header style="height: 40vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/">首页</a>
-          </li>
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/archives/">归档</a>
-          </li>
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/categories/">分类</a>
-          </li>
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/tags/">标签</a>
-          </li>
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/about/">关于yajun</a>
-          </li>
-        
-          
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/links/">友链</a>
-          </li>
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="view intro-2" id="background" false
-         style="background: url('/img/default.png')no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask rgba-black-light flex-center">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
-
-            
-              <br>
-              
-                <p class="mt-3">
-                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期四, 七月 12日 2018, 9:42 晚上
-                </p>
-              
-
-              <p>
-                
-                  
-                  &nbsp;<i class="far fa-chart-bar"></i>
-                  <span class="post-count">
-                    2.3k 字
-                  </span>&nbsp;
-                
-
-                
-                  
-                  &nbsp;<i class="far fa-clock"></i>
-                  <span class="post-count">
-                      10 分钟
-                  </span>&nbsp;
-                
-
-                
-                  <!-- 不蒜子统计文章PV -->
-                  
-                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
-                  <span id="busuanzi_container_page_pv">
-                    <span id="busuanzi_value_page_pv"></span> 次
-                  </span>&nbsp;
-                
-              </p>
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="py-5 z-depth-3" id="board">
-        <div class="post-content mx-auto" id="post">
-          <div class="markdown-body">
-            <p>  装饰器的使用显得很Pythonic，在源码中装饰器也很常见。用一个数学例子作为类比，理解一下闭包和装饰器。<a id="more"></a></p>
-<h2 id="装饰器是什么"><a class="markdownIt-Anchor" href="#装饰器是什么"></a> 装饰器是什么？</h2>
-<blockquote>
-<p><strong>装饰器</strong>本质上是一个闭包，它接受一个函数作为参数，并返回函数。可以不改变代码情况下，动态修改函数功能。</p>
-</blockquote>
-<p>  有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。在说明装饰器原理前，还要说另一个概念：<strong>闭包</strong>。</p>
-<h2 id="闭包"><a class="markdownIt-Anchor" href="#闭包"></a> 闭包</h2>
-<p>  <em>闭包</em>就是能够读取其他函数内部变量的函数。</p>
-<pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">outer</span><span class="hljs-params">()</span>:</span>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png"><link rel="icon" type="image/png" href="/img/favicon.png"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="There can be miracles when you believe"><meta name="author" content="雅俊 Yajun"><meta name="keywords" content="Deep Learning, Computer Science, Mathematics"><title>Python装饰器 by TOXIC</title><link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"><link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"><link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css"><link rel="stylesheet" href="/lib/prettify/github-v2.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"><link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><meta name="generator" content="Hexo 4.2.0"></head><body><header style="height:40vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"> <a class="nav-link" href="/">首页</a></li><li class="nav-item"> <a class="nav-link" href="/archives/">归档</a></li><li class="nav-item"> <a class="nav-link" href="/categories/">分类</a></li><li class="nav-item"> <a class="nav-link" href="/tags/">标签</a></li><li class="nav-item"> <a class="nav-link" href="/about/">关于yajun</a></li><li class="nav-item"> <a class="nav-link" href="/links/">友链</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a></li></ul></div></div></nav><div class="view intro-2" id="background" false style="background:url(/img/default.png) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask rgba-black-light flex-center"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><br><p class="mt-3"><i class="fas fa-calendar-alt" aria-hidden="true"></i> &nbsp; 星期四, 七月 12日 2018, 9:42 晚上</p><p> &nbsp;<i class="far fa-chart-bar"></i> <span class="post-count">2.3k 字</span> &nbsp; &nbsp;<i class="far fa-clock"></i> <span class="post-count">10 分钟</span> &nbsp; &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;<span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span> 次</span> &nbsp;</p></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="py-5 z-depth-3" id="board"><div class="post-content mx-auto" id="post"><div class="markdown-body"><p>  装饰器的使用显得很Pythonic，在源码中装饰器也很常见。用一个数学例子作为类比，理解一下闭包和装饰器。<a id="more"></a></p><h2 id="装饰器是什么"><a class="markdownIt-Anchor" href="#装饰器是什么"></a> 装饰器是什么？</h2><blockquote><p><strong>装饰器</strong>本质上是一个闭包，它接受一个函数作为参数，并返回函数。可以不改变代码情况下，动态修改函数功能。</p></blockquote><p>  有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。在说明装饰器原理前，还要说另一个概念：<strong>闭包</strong>。</p><h2 id="闭包"><a class="markdownIt-Anchor" href="#闭包"></a> 闭包</h2><p>  <em>闭包</em>就是能够读取其他函数内部变量的函数。</p><pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">outer</span><span class="hljs-params">()</span>:</span>
     x = <span class="hljs-number">1</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inner</span><span class="hljs-params">()</span>:</span>
         print(x)
@@ -198,42 +6,7 @@
 
 f = outer()
 f() <span class="hljs-comment"># 1</span>
-</code></pre>
-<p>  <code>x</code>是外部函数<code>outer</code>的local variable，当<code>outer</code>调用结束后，按理说，变量<code>x</code>的生命周期就结束了。但是<code>inner</code>能够正常的读取到<code>x</code>，相当于变量的生命周期变长了。这是因为Python支持了闭包特性。</p>
-<p>  原理就是函数内部<code>__closure__</code>属性记录了enclosing scope中的non_local variable。详细原理可见博客<a href="https://segmentfault.com/a/1190000008955952" target="_blank" rel="noopener">Python Closure</a>，从汇编的角度剖析了闭包的原理。</p>
-<h2 id="装饰器"><a class="markdownIt-Anchor" href="#装饰器"></a> 装饰器</h2>
-<p>  Python的装饰器就是对闭包的一种应用，先看一个数学例子。</p>
-<h3 id="类比-数学例子"><a class="markdownIt-Anchor" href="#类比-数学例子"></a> 类比-数学例子</h3>
-<table>
-<thead>
-<tr>
-<th>过程名称</th>
-<th>过程</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>原函数</strong></td>
-<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x)=2*x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></td>
-</tr>
-<tr>
-<td><strong>函数变换</strong></td>
-<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn><mo>∗</mo><mi>t</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">F(t)=3*t-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></td>
-</tr>
-<tr>
-<td><strong>新函数</strong></td>
-<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>F</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(x)=F(f(x))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span><br><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mn>3</mn><mo>∗</mo><mo stretchy="false">(</mo><mn>2</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">=3*(2*x+1)-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span><br><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mn>6</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">=6*x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></td>
-</tr>
-<tr>
-<td><strong>重命名</strong></td>
-<td>令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)=g(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，<br>即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>6</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x)=6*x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></td>
-</tr>
-</tbody>
-</table>
-<p>  通过变换，现在的函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>具有了和以前不一样的函数功能。事实上，装饰器也是这样的工作原理。</p>
-<h3 id="装饰器代码"><a class="markdownIt-Anchor" href="#装饰器代码"></a> 装饰器代码</h3>
-<p>  将上述过程用代码实现：</p>
-<pre class="highlight"><code class="python"><span class="hljs-comment"># 闭包</span>
+</code></pre><p>  <code>x</code>是外部函数<code>outer</code>的local variable，当<code>outer</code>调用结束后，按理说，变量<code>x</code>的生命周期就结束了。但是<code>inner</code>能够正常的读取到<code>x</code>，相当于变量的生命周期变长了。这是因为Python支持了闭包特性。</p><p>  原理就是函数内部<code>__closure__</code>属性记录了enclosing scope中的non_local variable。详细原理可见博客<a href="https://segmentfault.com/a/1190000008955952" target="_blank" rel="noopener">Python Closure</a>，从汇编的角度剖析了闭包的原理。</p><h2 id="装饰器"><a class="markdownIt-Anchor" href="#装饰器"></a> 装饰器</h2><p>  Python的装饰器就是对闭包的一种应用，先看一个数学例子。</p><h3 id="类比-数学例子"><a class="markdownIt-Anchor" href="#类比-数学例子"></a> 类比-数学例子</h3><table><thead><tr><th>过程名称</th><th>过程</th></tr></thead><tbody><tr><td><strong>原函数</strong></td><td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x)=2*x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.10764em">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">2</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.66666em;vertical-align:-.08333em"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">1</span></span></span></span></td></tr><tr><td><strong>函数变换</strong></td><td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn><mo>∗</mo><mi>t</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">F(t)=3*t-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.13889em">F</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">3</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.69841em;vertical-align:-.08333em"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">2</span></span></span></span></td></tr><tr><td><strong>新函数</strong></td><td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>F</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(x)=F(f(x))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.03588em">g</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.13889em">F</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:.10764em">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span><br><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mn>3</mn><mo>∗</mo><mo stretchy="false">(</mo><mn>2</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">=3*(2*x+1)-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:.36687em;vertical-align:0"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">3</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.66666em;vertical-align:-.08333em"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">2</span></span></span></span><br><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mn>6</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">=6*x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:.36687em;vertical-align:0"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">6</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.66666em;vertical-align:-.08333em"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">1</span></span></span></span></td></tr><tr><td><strong>重命名</strong></td><td>令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)=g(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.10764em">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.03588em">g</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，<br>即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>6</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x)=6*x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.10764em">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:.2777777777777778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:.2777777777777778em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">6</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.66666em;vertical-align:-.08333em"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:.2222222222222222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:.2222222222222222em"></span></span><span class="base"><span class="strut" style="height:.64444em;vertical-align:0"></span><span class="mord">1</span></span></span></span></td></tr></tbody></table><p>  通过变换，现在的函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.10764em">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>具有了和以前不一样的函数功能。事实上，装饰器也是这样的工作原理。</p><h3 id="装饰器代码"><a class="markdownIt-Anchor" href="#装饰器代码"></a> 装饰器代码</h3><p>  将上述过程用代码实现：</p><pre class="highlight"><code class="python"><span class="hljs-comment"># 闭包</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decorator</span><span class="hljs-params">(func)</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kw)</span>:</span>
         <span class="hljs-keyword">return</span> <span class="hljs-number">3</span>*func(*args,**kw)<span class="hljs-number">-2</span>
@@ -250,40 +23,7 @@ f() <span class="hljs-comment"># 1</span>
 <span class="hljs-comment"># 现在的f(x)已经是新函数了</span>
 <span class="hljs-comment"># @语法糖的作用是重命名：f = decorator(f) </span>
 print(f(<span class="hljs-number">1</span>))  <span class="hljs-comment"># ret:7=6*1+1</span>
-</code></pre>
-<p>  可以发现装饰器函数就是<strong>对原函数包了一层，额外添加一些功能</strong>(或者说是闭包)。闭包已经实现了新函数的功能，通过<code>@</code>语法糖可以省略<code>f=F(f)</code>的显式声明，现在使用原函数的名字<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>就可以实现新函数的作用。</p>
-<h3 id="类比-装饰器"><a class="markdownIt-Anchor" href="#类比-装饰器"></a> 类比-装饰器</h3>
-<table>
-<thead>
-<tr>
-<th>装饰器</th>
-<th>数学例子</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>原函数</td>
-<td>原函数</td>
-</tr>
-<tr>
-<td>闭包</td>
-<td>函数变换</td>
-</tr>
-<tr>
-<td>闭包返回值</td>
-<td>新函数</td>
-</tr>
-<tr>
-<td>装饰器@语法糖作用</td>
-<td>重命名</td>
-</tr>
-</tbody>
-</table>
-<h2 id="怎么写装饰器"><a class="markdownIt-Anchor" href="#怎么写装饰器"></a> 怎么写装饰器？</h2>
-<p>  博客<a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">详解Python的装饰器</a>关于这方面内容就很详细完整，这里的顺序和参考博客一样。</p>
-<h3 id="普通装饰器"><a class="markdownIt-Anchor" href="#普通装饰器"></a> 普通装饰器</h3>
-<p>  通过装饰器，增加函数功能:运行时，打印出函数名字和函数的内存地址。</p>
-<pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(func)</span>:</span>
+</code></pre><p>  可以发现装饰器函数就是<strong>对原函数包了一层，额外添加一些功能</strong>(或者说是闭包)。闭包已经实现了新函数的功能，通过<code>@</code>语法糖可以省略<code>f=F(f)</code>的显式声明，现在使用原函数的名字<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-.25em"></span><span class="mord mathdefault" style="margin-right:.10764em">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>就可以实现新函数的作用。</p><h3 id="类比-装饰器"><a class="markdownIt-Anchor" href="#类比-装饰器"></a> 类比-装饰器</h3><table><thead><tr><th>装饰器</th><th>数学例子</th></tr></thead><tbody><tr><td>原函数</td><td>原函数</td></tr><tr><td>闭包</td><td>函数变换</td></tr><tr><td>闭包返回值</td><td>新函数</td></tr><tr><td>装饰器@语法糖作用</td><td>重命名</td></tr></tbody></table><h2 id="怎么写装饰器"><a class="markdownIt-Anchor" href="#怎么写装饰器"></a> 怎么写装饰器？</h2><p>  博客<a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">详解Python的装饰器</a>关于这方面内容就很详细完整，这里的顺序和参考博客一样。</p><h3 id="普通装饰器"><a class="markdownIt-Anchor" href="#普通装饰器"></a> 普通装饰器</h3><p>  通过装饰器，增加函数功能:运行时，打印出函数名字和函数的内存地址。</p><pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(func)</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span>
         print(func.__name__, id(func))
         <span class="hljs-keyword">return</span> func(*args, **kwargs)
@@ -292,17 +32,10 @@ print(f(<span class="hljs-number">1</span>))  <span class="hljs-comment"># ret:7
 <span class="hljs-meta">@show</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b)</span>:</span>
     print(a+b)
-</code></pre>
-<pre><code>add(2,3)
+</code></pre><pre><code>add(2,3)
 add 336812640
 5
-</code></pre>
-<p>  不难看出，实际上现在的<code>add</code>函数通过装饰器的修饰，实际上指向装饰器函数<code>show</code>的返回函数<code>wrapper</code>。<code>wrapper</code>中的逻辑就是新的函数的逻辑，这里不仅实现了原函数<code>add</code>的功能，还额外添加了打印函数名字和id的功能。</p>
-<p>  可见，想要知道一个装饰器的作用应该<strong>查看装饰器函数最内层的函数的逻辑。</strong></p>
-<h3 id="带参数的装饰器"><a class="markdownIt-Anchor" href="#带参数的装饰器"></a> 带参数的装饰器</h3>
-<p>  现在还想在运行函数时，如果函数所在的内存大于指定数字就报警。那么，我们需要给装饰器传一个参数来传递指定数字。</p>
-<p>  可是在上述的代码中，装饰器函数所实现的闭包必须要以函数作为参数，不能改动。通过之前经验，可以给装饰器函数再包一层就行了，这次最外层的函数就是为了传递参数。</p>
-<pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(num)</span>:</span>
+</code></pre><p>  不难看出，实际上现在的<code>add</code>函数通过装饰器的修饰，实际上指向装饰器函数<code>show</code>的返回函数<code>wrapper</code>。<code>wrapper</code>中的逻辑就是新的函数的逻辑，这里不仅实现了原函数<code>add</code>的功能，还额外添加了打印函数名字和id的功能。</p><p>  可见，想要知道一个装饰器的作用应该<strong>查看装饰器函数最内层的函数的逻辑。</strong></p><h3 id="带参数的装饰器"><a class="markdownIt-Anchor" href="#带参数的装饰器"></a> 带参数的装饰器</h3><p>  现在还想在运行函数时，如果函数所在的内存大于指定数字就报警。那么，我们需要给装饰器传一个参数来传递指定数字。</p><p>  可是在上述的代码中，装饰器函数所实现的闭包必须要以函数作为参数，不能改动。通过之前经验，可以给装饰器函数再包一层就行了，这次最外层的函数就是为了传递参数。</p><pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(num)</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">outer_wrapper</span><span class="hljs-params">(func)</span>:</span>
         <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span>
             print(func.__name__, id(func))
@@ -315,8 +48,7 @@ add 336812640
 <span class="hljs-meta">@show(30000000)</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b)</span>:</span>
     print(a+b)
-</code></pre>
-<pre><code>add(2,3)
+</code></pre><pre><code>add(2,3)
 Traceback (most recent call last):
   File &quot;D:\software\anaconda\lib\site-packages\IPython\core\interactiveshell.py&quot;, line 2963, in run_code
     exec(code_obj, self.user_global_ns, self.user_ns)
@@ -326,22 +58,15 @@ Traceback (most recent call last):
     raise ValueError(&quot;报警了&quot;)
 ValueError: 报警了
 add 337550872
-</code></pre>
-<p>  这里的思路一脉相承，原函数需要改变，通过装饰器函数来将原函数包一层。而装饰器函数本身需要改变（比如添加参数），就在外面再包一层。通过这样的方式来改变函数。仔细揣摩一下，基本上简单的装饰器就不是问题了。</p>
-<h3 id="类装饰器"><a class="markdownIt-Anchor" href="#类装饰器"></a> 类装饰器</h3>
-<p>  有的时候一些源码中使用的是类当装饰器函数，类怎么当函数？其实一个类只要实现了<code>__call__</code>方法，就能像函数一样被调用。</p>
-<pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>:</span>
+</code></pre><p>  这里的思路一脉相承，原函数需要改变，通过装饰器函数来将原函数包一层。而装饰器函数本身需要改变（比如添加参数），就在外面再包一层。通过这样的方式来改变函数。仔细揣摩一下，基本上简单的装饰器就不是问题了。</p><h3 id="类装饰器"><a class="markdownIt-Anchor" href="#类装饰器"></a> 类装饰器</h3><p>  有的时候一些源码中使用的是类当装饰器函数，类怎么当函数？其实一个类只要实现了<code>__call__</code>方法，就能像函数一样被调用。</p><pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, num)</span>:</span>
         self.num = num
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span><span class="hljs-params">(self, b)</span>:</span>    
         print(self.num + b)
-</code></pre>
-<pre><code>t1 = Test(5)
+</code></pre><pre><code>t1 = Test(5)
 t1(3)
 8
-</code></pre>
-<p>  <code>t1</code>是<code>Test</code>类的实例化对象，由于<code>Test</code>实现了<code>__call__</code>方法，所以<code>t1</code>可以像一个函数一样被调用。那么，通过类来实现装饰器。</p>
-<pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">show</span>:</span>
+</code></pre><p>  <code>t1</code>是<code>Test</code>类的实例化对象，由于<code>Test</code>实现了<code>__call__</code>方法，所以<code>t1</code>可以像一个函数一样被调用。那么，通过类来实现装饰器。</p><pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">show</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, func)</span>:</span>
         self.func = func
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span><span class="hljs-params">(self, *args, **kwargs)</span>:</span>
@@ -351,13 +76,10 @@ t1(3)
 <span class="hljs-meta">@show</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b)</span>:</span>
     print(a+b)
-</code></pre>
-<pre><code>add(3,2)
+</code></pre><pre><code>add(3,2)
 add 337672936
 5
-</code></pre>
-<p>  类比于函数作装饰器，类中的<code>__init__</code>函数相当于外层函数，而<code>__call__</code>相当于能够添加函数功能的内层函数。如果要实现带参数的装饰器的话，修改如下：</p>
-<pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">show</span>:</span>
+</code></pre><p>  类比于函数作装饰器，类中的<code>__init__</code>函数相当于外层函数，而<code>__call__</code>相当于能够添加函数功能的内层函数。如果要实现带参数的装饰器的话，修改如下：</p><pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">show</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, num)</span>:</span>
         self.num = num
         
@@ -372,8 +94,7 @@ add 337672936
 <span class="hljs-meta">@show(3000000)</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b)</span>:</span>
     print(a+b)
-</code></pre>
-<pre><code>add(3,2)
+</code></pre><pre><code>add(3,2)
 Traceback (most recent call last):
   File &quot;D:\software\anaconda\lib\site-packages\IPython\core\interactiveshell.py&quot;, line 2963, in run_code
     exec(code_obj, self.user_global_ns, self.user_ns)
@@ -383,15 +104,9 @@ Traceback (most recent call last):
     raise ValueError(&quot;报警了&quot;)
 ValueError: 报警了
 add 337610000
-</code></pre>
-<p>  其实和之前的思路一模一样，只是需要针对类稍作改动。</p>
-<h2 id="装饰器注意点"><a class="markdownIt-Anchor" href="#装饰器注意点"></a> 装饰器注意点</h2>
-<p>  参考博客<a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">详解Python的装饰器</a>中提到的错误的函数签名和文档值得令人注意。通过装饰器修饰后，原来的函数<code>__name__</code>实际上已经改变了。</p>
-<pre><code>add.__name__
+</code></pre><p>  其实和之前的思路一模一样，只是需要针对类稍作改动。</p><h2 id="装饰器注意点"><a class="markdownIt-Anchor" href="#装饰器注意点"></a> 装饰器注意点</h2><p>  参考博客<a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">详解Python的装饰器</a>中提到的错误的函数签名和文档值得令人注意。通过装饰器修饰后，原来的函数<code>__name__</code>实际上已经改变了。</p><pre><code>add.__name__
 Out[34]: 'wrapper'
-</code></pre>
-<p>这点其实正好印证了上面的说法。如果就想要<code>add</code>通过装饰器后和原来完全一样怎么办？使用标准库里的<code>functools.wraps</code>:</p>
-<pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(func)</span>:</span>
+</code></pre><p>这点其实正好印证了上面的说法。如果就想要<code>add</code>通过装饰器后和原来完全一样怎么办？使用标准库里的<code>functools.wraps</code>:</p><pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(func)</span>:</span>
 <span class="hljs-meta">    @wraps(func)</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span>
         print(func.__name__, id(func))
@@ -400,19 +115,12 @@ Out[34]: 'wrapper'
 <span class="hljs-meta">@show</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b)</span>:</span>
     print(a+b)
-</code></pre>
-<pre><code>add(3,2)
+</code></pre><pre><code>add(3,2)
 add 337610272
 5
 add.__name__
 Out[40]: 'add'
-</code></pre>
-<p>  当然这里用<code>inspect</code>看还是有点问题的，要想完全一样，建议查看参考博客<a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">详解Python的装饰器</a>中有关wrapt的部分（完善的装饰器加强包）。</p>
-<h2 id="装饰器的应用"><a class="markdownIt-Anchor" href="#装饰器的应用"></a> 装饰器的应用？</h2>
-<p>  工作中，装饰器有没有作用呢？目前来说，我使用装饰器大多是一些简单的功能，具体记录如下：</p>
-<h3 id="函数计时器"><a class="markdownIt-Anchor" href="#函数计时器"></a> 函数计时器</h3>
-<p>  有些函数需要在有限时间内完成。比如，在跑spark任务的时候，发现有的时候，会卡在某些stage或者其他地方，导致任务很长时间都跑不完。在原来函数的基础上加上计时器来及时中断这些任务。</p>
-<pre class="highlight"><code class="python"><span class="hljs-string">'''使用Linux alarm信号来使限制函数运行时间的装饰器'''</span>
+</code></pre><p>  当然这里用<code>inspect</code>看还是有点问题的，要想完全一样，建议查看参考博客<a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">详解Python的装饰器</a>中有关wrapt的部分（完善的装饰器加强包）。</p><h2 id="装饰器的应用"><a class="markdownIt-Anchor" href="#装饰器的应用"></a> 装饰器的应用？</h2><p>  工作中，装饰器有没有作用呢？目前来说，我使用装饰器大多是一些简单的功能，具体记录如下：</p><h3 id="函数计时器"><a class="markdownIt-Anchor" href="#函数计时器"></a> 函数计时器</h3><p>  有些函数需要在有限时间内完成。比如，在跑spark任务的时候，发现有的时候，会卡在某些stage或者其他地方，导致任务很长时间都跑不完。在原来函数的基础上加上计时器来及时中断这些任务。</p><pre class="highlight"><code class="python"><span class="hljs-string">'''使用Linux alarm信号来使限制函数运行时间的装饰器'''</span>
 <span class="hljs-keyword">import</span> signal
 <span class="hljs-keyword">import</span> time
 
@@ -446,10 +154,7 @@ Out[40]: 'add'
     <span class="hljs-keyword">except</span> TimeoutError:
         print(<span class="hljs-string">"function is timeout"</span>)
         <span class="hljs-keyword">pass</span>
-</code></pre>
-<h3 id="函数定时器"><a class="markdownIt-Anchor" href="#函数定时器"></a> 函数定时器</h3>
-<p>  有些函数需要在指定时间进行。线上机器学习模型是通过小批量不断更新的，每隔两小时跑一次evaluation，而每天12点定时删除一些旧的模型数据。</p>
-<pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> datetime
+</code></pre><h3 id="函数定时器"><a class="markdownIt-Anchor" href="#函数定时器"></a> 函数定时器</h3><p>  有些函数需要在指定时间进行。线上机器学习模型是通过小批量不断更新的，每隔两小时跑一次evaluation，而每天12点定时删除一些旧的模型数据。</p><pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> datetime
 
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cron</span><span class="hljs-params">(interval, rem)</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(func)</span>:</span>
@@ -474,10 +179,7 @@ Out[40]: 'add'
 <span class="hljs-meta">@cron(2, 0)</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">task2</span><span class="hljs-params">()</span>:</span>
     <span class="hljs-keyword">pass</span>
-</code></pre>
-<h3 id="预激生成器"><a class="markdownIt-Anchor" href="#预激生成器"></a> 预激生成器</h3>
-<p>  python协程可以通过生成器实现。例如下面的consumer协程需要预先跑到yield的地方才能使用，通过装饰器来预激生成器。</p>
-<pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">coroutine</span><span class="hljs-params">(func)</span>:</span>
+</code></pre><h3 id="预激生成器"><a class="markdownIt-Anchor" href="#预激生成器"></a> 预激生成器</h3><p>  python协程可以通过生成器实现。例如下面的consumer协程需要预先跑到yield的地方才能使用，通过装饰器来预激生成器。</p><pre class="highlight"><code class="python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">coroutine</span><span class="hljs-params">(func)</span>:</span>
     <span class="hljs-string">"""预激生成器"""</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span>
         gen = func(*args, **kwargs)
@@ -500,10 +202,7 @@ Out[40]: 'add'
 c = consumer(arg_dict)
 producer(c, arg_dict)
 
-</code></pre>
-<h3 id="函数注册"><a class="markdownIt-Anchor" href="#函数注册"></a> 函数注册</h3>
-<p>  将函数注册到指定的字典中。</p>
-<pre class="highlight"><code class="python">_registry = {}
+</code></pre><h3 id="函数注册"><a class="markdownIt-Anchor" href="#函数注册"></a> 函数注册</h3><p>  将函数注册到指定的字典中。</p><pre class="highlight"><code class="python">_registry = {}
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Register</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name)</span>:</span>
       	self.name = name
@@ -515,232 +214,9 @@ producer(c, arg_dict)
 <span class="hljs-meta">@Register("a1")</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(arg)</span>:</span>
     print(arg)
-</code></pre>
-<pre><code>In[3]:_registry
+</code></pre><pre><code>In[3]:_registry
 Out[3]: {'a1': &lt;function __main__.func(arg)&gt;}
-</code></pre>
-
-            <hr>
-          </div>
-          <br>
-          <div>
-            <p>
-            
-              <span>
-                <i class="iconfont icon-inbox"></i>
-                
-                  <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a>
-                  &nbsp;
-                
-                  <a class="hover-with-bg" href="/categories/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
-                  &nbsp;
-                
-              </span>&nbsp;&nbsp;
-            
-            
-              <span>
-                <i class="iconfont icon-tag"></i>
-                
-                  <a class="hover-with-bg" href="/tags/Python/">Python</a>
-                
-              </span>
-            
-            </p>
-            
-              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="d-none d-lg-block col-lg-2 toc-container">
-      
-  <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
-    <div id="tocbot"></div>
-  </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- custom -->
-
-
-<!-- Comments -->
-<div class="col-lg-7 mx-auto nopadding-md">
-  <div class="container comments mx-auto" id="comments">
-    
-      <br><br>
-      
-      
-  <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
-  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
-
-  <script>
-    var notify = 'false' === true;
-    var verify = 'true' === true;
-    var oldLoad = window.onload;
-    window.onload = function () {
-      new Valine({
-        el: '#vcomments',
-        notify: notify,
-        verify: verify,
-        app_id: "BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",
-        app_key: "7vVR2eHglETeQCeqoSoff3Ek",
-        placeholder: "说点什么",
-        avatar: "mp",
-        meta: ['nick', 'mail', 'link'],
-        pageSize: "10",
-      });
-      oldLoad && oldLoad();
-    };
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript>
-
-
-    
-  </div>
-</div>
-
-    
-  </main>
-
-  
-    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
-      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
-    </a>
-  
-
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <i class="iconfont icon-love"></i>
-    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
-    <br>
-
-    
-  
-    <!-- 不蒜子统计PV -->
-    
-    &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量 
-          <span id="busuanzi_value_site_pv"></span> 次&nbsp;
-  
-  
-    <!-- 不蒜子统计UV -->
-    
-    &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数 
-            <span id="busuanzi_value_site_uv"></span> 人&nbsp;
-  
-  <br>
-
-
-
-    
-
-
-    <!-- cnzz Analytics icon -->
-    
-
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script src="/lib/jquery/jquery.min.js" ></script>
-<script src="/lib/popper/popper.min.js" ></script>
-<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
-<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
-<script src="/js/main.js" ></script>
-
-
-  <script src="/js/lazyload.js" ></script>
-
-
-
-  
-    <script src="/lib/tocbot/tocbot.min.js" ></script>
-  
-  <script src="/js/post.js" ></script>
-
-
-
-
-
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-<!-- Plugins -->
-
-
-  
-
-  
-
-  
-
-  
-
-  <!-- cnzz Analytics -->
-  
-
-
-
-  <script src="/lib/prettify/prettify.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      $('pre').addClass('prettyprint  linenums');
-      prettyPrint();
-    })
-  </script>
-
-
-
-  <script src="/lib/typed/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "Python装饰器&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 80,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script src="/lib/anchor/anchor.min.js" ></script>
-  <script>
+</code></pre><hr></div><br><div><p><span><i class="iconfont icon-inbox"></i> <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a> &nbsp; <a class="hover-with-bg" href="/categories/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a> &nbsp;</span> &nbsp;&nbsp;<span><i class="iconfont icon-tag"></i> <a class="hover-with-bg" href="/tags/Python/">Python</a></span></p><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container"><div id="toc"><p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p><div id="tocbot"></div></div></div></div></div><div class="col-lg-7 mx-auto nopadding-md"><div class="container comments mx-auto" id="comments"><br><br><div id="vcomments" style="width:90%;margin:0 auto"></div><script defer="defer" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script defer="defer" src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var notify=!1,verify=!1,oldLoad=window.onload;window.onload=function(){new Valine({el:"#vcomments",notify:notify,verify:verify,app_id:"BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",app_key:"7vVR2eHglETeQCeqoSoff3Ek",placeholder:"说点什么",avatar:"mp",meta:["nick","mail","link"],pageSize:"10"}),oldLoad&&oldLoad()}</script><noscript>Please enable JavaScript to view the<a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript></div></div></main><a class="z-depth-1" id="scroll-top-button" href="#" role="button"><i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><footer class="mt-5"><div class="text-center py-3"><i class="iconfont icon-love"></i> <a href="/about/" target="_self" rel="nofollow noopener"><b>Yajun</b></a><br> &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量<span id="busuanzi_value_site_pv"></span> 次&nbsp; &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数<span id="busuanzi_value_site_uv"></span> 人&nbsp;<br></div></footer><script src="/lib/jquery/jquery.min.js"></script><script src="/lib/popper/popper.min.js"></script><script src="/lib/bootstrap/js/bootstrap.min.js"></script><script src="/lib/mdbootstrap/js/mdb.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="/lib/tocbot/tocbot.min.js"></script><script src="/js/post.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/lib/prettify/prettify.min.js"></script><script>$(document).ready(function(){$("pre").addClass("prettyprint  linenums"),prettyPrint()})</script><script src="/lib/typed/typed.min.js"></script><script>var typed=new Typed("#subtitle",{strings:["  ","Python装饰器&nbsp;"],cursorChar:"_",typeSpeed:80,loop:!1});typed.stop(),$(document).ready(function(){$(".typed-cursor").addClass("h2"),typed.start()})</script><script src="/lib/anchor/anchor.min.js"></script><script>
     anchors.options = {
       placement: "right",
       visible: "false",
@@ -752,24 +228,7 @@ Out[3]: {'a1': &lt;function __main__.func(arg)&gt;}
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      getSearchFile(path);
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
-  <script>
+  </script><script src="/js/local-search.js"></script><script>var path="/local-search.xml",inputArea=document.querySelector("#local-search-input");inputArea.onclick=function(){getSearchFile(path),this.onclick=null}</script><script src="/lib/fancybox/jquery.fancybox.min.js"></script><script>
     $("#post img:not(.no-zoom img, img[no-zoom])").each(
       function () {
         var element = document.createElement("a");
@@ -783,18 +242,4 @@ Out[3]: {'a1': &lt;function __main__.func(arg)&gt;}
         }
       }
     );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
-</html>
+  </script></body></html>
