@@ -54,7 +54,7 @@ body a:hover {
   padding: 0 1.25rem;
 }
 .markdown-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Noto Serif SC", Roboto, "Segoe UI", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Serif SC", "Segoe UI", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 .markdown-body hr {
   height: 0.2em;
