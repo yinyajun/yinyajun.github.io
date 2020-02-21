@@ -653,15 +653,6 @@ s {
 .v .power a {
   display: none;
 }
-.category-tree-list-item {
-  text-align: center;
-}
-.category-tree-list-link {
-  background-image: radial-gradient(rgba(236,234,4,0.478), transparent);
-}
-.category-tree-list {
-  list-style-type: none;
-}
 #vcomments {
   width: 100% !important;
   background-color: rgba(255,255,255,0.812);
@@ -671,10 +662,7 @@ s {
   text-align: center;
 }
 .drop-cap {
-  float: left;
-  font-size: 3.25em;
-  margin-right: 0.25em;
-  margin-top: 0.1em;
+  font-size: 3em;
 }
 .about-title {
   margin-top: 50px;
@@ -685,7 +673,7 @@ s {
   -webkit-text-fill-color: transparent;
 }
 .about-tagline {
-  padding: 0 3em 1em 3em;
+  padding: 0 3em 3em 3em;
   line-height: 1.75em;
   background-image: linear-gradient(90deg, #a166ab 0, #a166ab 40%, #ef4e7b 45%, #f37055 50%, #ef4e7b 55%, #a166ab 60%, #a166ab 100%);
   background-size: cover;
@@ -695,4 +683,15 @@ s {
 .about-intro {
   padding: 0 3em 1em 3em;
   line-height: 1.75em;
+}
+.categories-card-text {
+  font-size: 0.875em;
+  text-indent: 2em;
+  margin-bottom: 0;
+  margin-top: 1em;
+  color: #d00f0f;
+}
+.tagcloud {
+  max-width: 30em;
+  margin: auto;
 }
