@@ -1,4 +1,194 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png"><link rel="icon" type="image/png" href="/img/favicon.png"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="There can be miracles when you believe"><meta name="author" content="雅俊 Yajun"><meta name="keywords" content="Deep Learning, Computer Science, Mathematics"><title>Vim插件ycm的安装【转载】 by TOXIC</title><link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"><link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"><link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css"><link rel="stylesheet" href="/lib/prettify/github-v2.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"><link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><meta name="generator" content="Hexo 4.2.0"></head><body><header style="height:40vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"> <a class="nav-link" href="/">首页</a></li><li class="nav-item"> <a class="nav-link" href="/archives/">归档</a></li><li class="nav-item"> <a class="nav-link" href="/categories/">分类</a></li><li class="nav-item"> <a class="nav-link" href="/tags/">标签</a></li><li class="nav-item"> <a class="nav-link" href="/about/">关于yajun</a></li><li class="nav-item"> <a class="nav-link" href="/links/">友链</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a></li></ul></div></div></nav><div class="view intro-2" id="background" false style="background:url(/img/default.png) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask rgba-black-light flex-center"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><br><p class="mt-3"><i class="fas fa-calendar-alt" aria-hidden="true"></i> &nbsp; 星期日, 二月 24日 2019, 10:30 晚上</p><p> &nbsp;<i class="far fa-chart-bar"></i> <span class="post-count">835 字</span> &nbsp; &nbsp;<i class="far fa-clock"></i> <span class="post-count">4 分钟</span> &nbsp; &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;<span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span> 次</span> &nbsp;</p></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="py-5 z-depth-3" id="board"><div class="post-content mx-auto" id="post"><div class="markdown-body"><p>  按照不少教程，但是vim的ycm插件始终装不上，转载的这份教程很全。<a id="more"></a></p><blockquote><p><a href="http://www.fatinmidage.com/?p=262" target="_blank" rel="noopener">本节内容完全转载于fatinmidage的博客</a><br> <font color="blue">作者：fatinmidage</font></p></blockquote><h2 id="准备安装包以及依赖安装以下全程root"><a class="markdownIt-Anchor" href="#准备安装包以及依赖安装以下全程root"></a> 准备安装包以及依赖安装(以下全程root)：</h2><pre><code>yum upgrade -y
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="There can be miracles when you believe">
+  <meta name="author" content="雅俊 Yajun">
+  <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
+  <title>Vim插件ycm的安装【转载】 by TOXIC</title>
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css"  >
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="https://cdn.bootcss.com/mdbootstrap/4.8.7/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/github-v2.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"  >
+
+
+
+<link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于yajun</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 二月 24日 2019, 10:30 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    835 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      4 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>  按照不少教程，但是vim的ycm插件始终装不上，转载的这份教程很全。<a id="more"></a></p>
+<blockquote>
+<p><a href="http://www.fatinmidage.com/?p=262" target="_blank" rel="noopener">本节内容完全转载于fatinmidage的博客</a><br />
+<font color=blue>作者：fatinmidage</font></p>
+</blockquote>
+<h2 id="准备安装包以及依赖安装以下全程root"><a class="markdownIt-Anchor" href="#准备安装包以及依赖安装以下全程root"></a> 准备安装包以及依赖安装(以下全程root)：</h2>
+<pre><code>yum upgrade -y
 yum install -y epel-release
 yum install -y centos-release-scl devtoolset-3-toolchain
 scl enable devtoolset-3 bash
@@ -6,20 +196,31 @@ scl enable devtoolset-3 bash
 yum install -y gcc-c++ zlib* tk tcl
 yum install -y python34-devel ncurses-devel openssl-devel
 yum install -y libzip bzip2 git cmake python-devel wget readline-devel
-</code></pre><p>  如果<code>scl enable devtoolset-3 bash</code>报错conmand not found, 将<code>yum install -y centos-release-scl devtoolset-3-toolchain</code>再执行一遍，应该是devtoolset没装好</p><p>  <em>我替换了原作者的<code>python34-devel</code>为<code>python36-devel</code>，可以用yum search找到。</em></p><h2 id="用wget从官网下载python安装包到指定系统目录"><a class="markdownIt-Anchor" href="#用wget从官网下载python安装包到指定系统目录"></a> 用wget从官网下载python安装包到指定系统目录</h2><pre><code>wget -P /usr/local/src/ https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
-</code></pre><h2 id="安装python364"><a class="markdownIt-Anchor" href="#安装python364"></a> 安装Python3.6.4：</h2><pre><code>cd /usr/local/src/
+</code></pre>
+<p>  如果<code>scl enable devtoolset-3 bash</code>报错conmand not found, 将<code>yum install -y centos-release-scl devtoolset-3-toolchain</code>再执行一遍，应该是devtoolset没装好</p>
+<p>  <em>我替换了原作者的<code>python34-devel</code>为<code>python36-devel</code>，可以用yum search找到。</em></p>
+<h2 id="用wget从官网下载python安装包到指定系统目录"><a class="markdownIt-Anchor" href="#用wget从官网下载python安装包到指定系统目录"></a> 用wget从官网下载python安装包到指定系统目录</h2>
+<pre><code>wget -P /usr/local/src/ https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
+</code></pre>
+<h2 id="安装python364"><a class="markdownIt-Anchor" href="#安装python364"></a> 安装Python3.6.4：</h2>
+<pre><code>cd /usr/local/src/
 tar -xv -f Python-3.6.4.tgz
 cd Python-3.6.4/
 ./configure --prefix=/usr/local/python-3.6.4 --enable-shared
 make
 make install
-</code></pre><p>一定要<code>--enable-shared</code>，不然装ycm的时候报错</p><h2 id="修改环境变量配置文件"><a class="markdownIt-Anchor" href="#修改环境变量配置文件"></a> 修改环境变量配置文件</h2><pre><code>vi ~/.bash_profile
+</code></pre>
+<p>一定要<code>--enable-shared</code>，不然装ycm的时候报错</p>
+<h2 id="修改环境变量配置文件"><a class="markdownIt-Anchor" href="#修改环境变量配置文件"></a> 修改环境变量配置文件</h2>
+<pre><code>vi ~/.bash_profile
 *在文件中加入这句后保存退出
 export PATH=$PATH:/usr/local/python-3.6.4/bin/
 
 *刷新
 source ~/.bash_profile
-</code></pre><h2 id="建立python软链接"><a class="markdownIt-Anchor" href="#建立python软链接"></a> 建立python软链接</h2><pre><code>mv /usr/bin/python /usr/bin/python_bak
+</code></pre>
+<h2 id="建立python软链接"><a class="markdownIt-Anchor" href="#建立python软链接"></a> 建立python软链接</h2>
+<pre><code>mv /usr/bin/python /usr/bin/python_bak
 ln -s /usr/local/python-3.6.4/bin/python3.6 /usr/bin/python
 
 *修复yum，修改文件首行的路径：
@@ -27,7 +228,11 @@ vi /usr/bin/yum
 /usr/bin/python2
 vi /usr/libexec/urlgrabber-ext-down
 /usr/bin/python2
-</code></pre><p>  由于yum依赖系统自带的python，现在修改python的软链接后，将yum相关文件的首行指定python解释器的地方人为的修改为python2的解释器。CentOS minimal的<code>/usr/bin/</code>只有一个文件和yum相关。<br> 建议<code>ll /usr/bin/yum*</code>，把所有显示的文件都改了，不然yum使用的时候容易报错。</p><h2 id="安装vim8"><a class="markdownIt-Anchor" href="#安装vim8"></a> 安装VIM8：</h2><pre><code>git clone https://github.com/vim/vim.git /usr/local/src/vim
+</code></pre>
+<p>  由于yum依赖系统自带的python，现在修改python的软链接后，将yum相关文件的首行指定python解释器的地方人为的修改为python2的解释器。CentOS minimal的<code>/usr/bin/</code>只有一个文件和yum相关。<br />
+建议<code>ll /usr/bin/yum*</code>，把所有显示的文件都改了，不然yum使用的时候容易报错。</p>
+<h2 id="安装vim8"><a class="markdownIt-Anchor" href="#安装vim8"></a> 安装VIM8：</h2>
+<pre><code>git clone https://github.com/vim/vim.git /usr/local/src/vim
 cd /usr/local/src/vim/
 ./configure --with-features=huge --enable-python3interp --enable-pythoninterp --with-python-config-dir=/usr/lib64/python2.7/config --enable-rubyinterp --with-python3-config-dir=/usr/local/python-3.6.4/lib/python3.6/config-3.6m-x86_64-linux-gnu/ --enable-multibyte --enable-cscope --prefix=/usr/local/vim8
 
@@ -36,7 +241,9 @@ echo &quot;/usr/local/python-3.6.4/lib/&quot;  &gt;&gt; /etc/ld.so.conf
 ldconfig
 mv /usr/bin/vim /usr/bin/vim_bak
 ln -s /usr/local/vim8/bin/vim /usr/bin/vim
-</code></pre><h2 id="安装vundle"><a class="markdownIt-Anchor" href="#安装vundle"></a> 安装vundle；</h2><pre><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+</code></pre>
+<h2 id="安装vundle"><a class="markdownIt-Anchor" href="#安装vundle"></a> 安装vundle；</h2>
+<pre><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cd ~
 vim ~/.vimrc
 
@@ -57,7 +264,9 @@ set backspace=indent,eol,start
 set completeopt=menu,menuone
 let g:ycm_add_preview_to_completeopt = 0
 *完成后暂时不要打开vim进行插件的安装
-</code></pre><h2 id="下载安装插件ycm"><a class="markdownIt-Anchor" href="#下载安装插件ycm"></a> 下载安装插件(ycm)：</h2><pre><code>git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
+</code></pre>
+<h2 id="下载安装插件ycm"><a class="markdownIt-Anchor" href="#下载安装插件ycm"></a> 下载安装插件(ycm)：</h2>
+<pre><code>git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
 cd .vim/bundle/YouCompleteMe/
 git submodule update --init --recursive
 ./install.py --clang-completer
@@ -65,7 +274,14 @@ git submodule update --init --recursive
 vim
 :PluginInstall
 *至此，完成YouCompleteMe插件的安装
-</code></pre><ol><li>ycm比较大，直接PluginInstall可能遇到网络问题</li><li>利用ycm自己安装clang，省心。</li><li>这里的配置肯定不够，但是ycm插件装好了，其他的可以参考大佬配置，copy过来</li><li><strong>有的云主机内存小（1G左右）,安装clang的时候报<code>internal compiler error</code>，参考下面方法。</strong></li></ol><pre class="highlight"><code class="">g++: internal compiler error: Killed (program cc1plus)
+</code></pre>
+<ol>
+<li>ycm比较大，直接PluginInstall可能遇到网络问题</li>
+<li>利用ycm自己安装clang，省心。</li>
+<li>这里的配置肯定不够，但是ycm插件装好了，其他的可以参考大佬配置，copy过来</li>
+<li><strong>有的云主机内存小（1G左右）,安装clang的时候报<code>internal compiler error</code>，参考下面方法。</strong></li>
+</ol>
+<pre class="highlight"><code class="">g++: internal compiler error: Killed (program cc1plus)
 Please submit a full bug report
 
 # 主要原因大体上是因为内存不足,有点坑 临时使用交换分区来解决吧
@@ -79,7 +295,229 @@ After compiling, you may wish to
 Code:
 sudo swapoff /swapfile
 sudo rm /swapfile
-</code></pre><hr></div><br><div><p><span><i class="iconfont icon-inbox"></i> <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a> &nbsp; <a class="hover-with-bg" href="/categories/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a> &nbsp;</span> &nbsp;&nbsp;<span><i class="iconfont icon-tag"></i> <a class="hover-with-bg" href="/tags/Vim/">Vim</a></span></p><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container"><div id="toc"><p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p><div id="tocbot"></div></div></div></div></div><div class="col-lg-7 mx-auto nopadding-md"><div class="container comments mx-auto" id="comments"><br><br><div id="vcomments" style="width:90%;margin:0 auto"></div><script defer="defer" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script defer="defer" src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var notify=!1,verify=!1,oldLoad=window.onload;window.onload=function(){new Valine({el:"#vcomments",notify:notify,verify:verify,app_id:"BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",app_key:"7vVR2eHglETeQCeqoSoff3Ek",placeholder:"说点什么",avatar:"mp",meta:["nick","mail","link"],pageSize:"10"}),oldLoad&&oldLoad()}</script><noscript>Please enable JavaScript to view the<a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript></div></div></main><a class="z-depth-1" id="scroll-top-button" href="#" role="button"><i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><footer class="mt-5"><div class="text-center py-3"><i class="iconfont icon-love"></i> <a href="/about/" target="_self" rel="nofollow noopener"><b>Yajun</b></a><br> &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量<span id="busuanzi_value_site_pv"></span> 次&nbsp; &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数<span id="busuanzi_value_site_uv"></span> 人&nbsp;<br></div></footer><script src="/lib/jquery/jquery.min.js"></script><script src="/lib/popper/popper.min.js"></script><script src="/lib/bootstrap/js/bootstrap.min.js"></script><script src="/lib/mdbootstrap/js/mdb.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="/lib/tocbot/tocbot.min.js"></script><script src="/js/post.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/lib/prettify/prettify.min.js"></script><script>$(document).ready(function(){$("pre").addClass("prettyprint  linenums"),prettyPrint()})</script><script src="/lib/typed/typed.min.js"></script><script>var typed=new Typed("#subtitle",{strings:["  ","Vim插件ycm的安装【转载】&nbsp;"],cursorChar:"_",typeSpeed:80,loop:!1});typed.stop(),$(document).ready(function(){$(".typed-cursor").addClass("h2"),typed.start()})</script><script src="/lib/anchor/anchor.min.js"></script><script>
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a>
+                  &nbsp;
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Vim/">Vim</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var notify = 'false' === true;
+    var verify = 'true' === true;
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",
+        app_key: "7vVR2eHglETeQCeqoSoff3Ek",
+        placeholder: "说点什么",
+        avatar: "mp",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <i class="iconfont icon-love"></i>
+    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js" ></script>
+<script src="https://cdn.bootcss.com/popper.js/1.14.4/umd/popper.min.js" ></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+<script src="https://cdn.bootcss.com/mdbootstrap/4.8.7/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="https://cdn.bootcss.com/tocbot/4.10.0/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="https://cdn.bootcss.com/typed.js/2.0.5/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Vim插件ycm的安装【转载】&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 80,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="https://cdn.bootcss.com/anchor-js/4.2.0/anchor.min.js" ></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "false",
@@ -91,7 +529,24 @@ sudo rm /swapfile
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>var path="/local-search.xml",inputArea=document.querySelector("#local-search-input");inputArea.onclick=function(){getSearchFile(path),this.onclick=null}</script><script src="/lib/fancybox/jquery.fancybox.min.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  <script>
     $("#post img:not(.no-zoom img, img[no-zoom])").each(
       function () {
         var element = document.createElement("a");
@@ -105,4 +560,18 @@ sudo rm /swapfile
         }
       }
     );
-  </script></body></html>
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
