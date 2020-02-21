@@ -8,6 +8,7 @@ header,
 body {
   background-color: #eee;
   color: #3c4858;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Serif SC", Roboto, "Segoe UI", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 body a {
   color: #3c4858;
@@ -52,6 +53,9 @@ body a:hover {
 }
 #local-search-result .search-list-content {
   padding: 0 1.25rem;
+}
+.markdown-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Serif SC", Roboto, "Segoe UI", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 .markdown-body hr {
   height: 0.2em;
@@ -632,8 +636,11 @@ h6::before {
   margin-top: 0.5rem;
 }
 ins {
-  text-decoration-style: wavy;
-  text-decoration-color: #d48a21;
+  font-weight: normal;
+  -webkit-text-emphasis-position: under;
+  -webkit-text-emphasis: "▲";
+  text-decoration: none;
+  -webkit-text-emphasis-color: #d48a21;
 }
 em {
   color: #4a964a;
@@ -674,7 +681,7 @@ s {
   -webkit-text-fill-color: transparent;
 }
 .about-tagline {
-  padding: 0 3em 3em 3em;
+  padding: 0 3em 0em 3em;
   line-height: 1.75em;
   background-image: linear-gradient(90deg, #a166ab 0, #a166ab 40%, #ef4e7b 45%, #f37055 50%, #ef4e7b 55%, #a166ab 60%, #a166ab 100%);
   background-size: cover;
@@ -695,4 +702,8 @@ s {
 .tagcloud {
   max-width: 30em;
   margin: auto;
+}
+.about-music-box {
+  text-align: center;
+  margin-bottom: 1em;
 }
