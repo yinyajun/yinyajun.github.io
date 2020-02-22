@@ -1,14 +1,244 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png"><link rel="icon" type="image/png" href="/img/favicon.png"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="There can be miracles when you believe"><meta name="author" content="雅俊 Yajun"><meta name="keywords" content="Deep Learning, Computer Science, Mathematics"><title>Python元类 by TOXIC</title><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/mdbootstrap/4.8.7/css/mdb.min.css"><link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css"><link rel="stylesheet" href="/lib/prettify/github-v2.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"><link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><meta name="generator" content="Hexo 4.2.0"></head><body><header style="height:40vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"> <a class="nav-link" href="/">首页</a></li><li class="nav-item"> <a class="nav-link" href="/archives/">归档</a></li><li class="nav-item"> <a class="nav-link" href="/categories/">分类</a></li><li class="nav-item"> <a class="nav-link" href="/tags/">标签</a></li><li class="nav-item"> <a class="nav-link" href="/about/">关于yajun</a></li><li class="nav-item"> <a class="nav-link" href="/links/">友链</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a></li></ul></div></div></nav><div class="view intro-2" id="background" false style="background:url(/img/default.png) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask rgba-black-light flex-center"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><br><p class="mt-3"><i class="fas fa-calendar-alt" aria-hidden="true"></i> &nbsp; 星期日, 三月 17日 2019, 9:42 晚上</p><p> &nbsp;<i class="far fa-chart-bar"></i> <span class="post-count">938 字</span> &nbsp; &nbsp;<i class="far fa-clock"></i> <span class="post-count">4 分钟</span> &nbsp; &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;<span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span> 次</span> &nbsp;</p></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="py-5 z-depth-3" id="board"><div class="post-content mx-auto" id="post"><div class="markdown-body"><p>  了解python的元类以及相关概念。<a id="more"></a></p><h2 id="__init__-vs-__new__"><a class="markdownIt-Anchor" href="#__init__-vs-__new__"></a> <code>__init__</code> v.s. <code>__new__</code></h2><table><thead><tr><th>魔术方法</th><th>作用</th></tr></thead><tbody><tr><td><code>__init__</code>方法</td><td>在实例创建后调用，<br>初始化实例对象，是实例级别的方法。</td></tr><tr><td><code>__new__</code>方法</td><td>在实例创建前调用，<br>创建具体实例，是类级别的方法。</td></tr></tbody></table><p>  通过<code>__new__</code>方法可以动态的控制实例生成。利用这个，可以很容易的实现Singleton.</p><h2 id="type-vs-object的关系"><a class="markdownIt-Anchor" href="#type-vs-object的关系"></a> <code>type</code> v.s. <code>object</code>的关系</h2><p>  两者的关系是嵌套的，深入理解需要剖析python源码。参考知乎：</p><blockquote><p><a href="https://www.zhihu.com/question/38791962" target="_blank" rel="noopener">Python 的 type 和 object 之间是怎么一种关系？</a></p></blockquote><ul><li>Python中一切皆对象，<code>object</code>是一切对象的父类。</li><li><code>type</code>也是对象，必然继承<code>object</code>.</li><li>每个对象中有一个描述该对象类型的类型对象，用来描述对象创建时需要内存大小等。</li><li>而<code>type</code>是所有类型对象的父类，<code>object</code>中类型对象就是<code>type</code>，<code>type</code>的类型对象也是<code>type</code>。</li></ul><p><img src="/images/figure/python-metaclass1.jpg" srcset="/img/loading.gif" alt="type v.s. object"></p><h2 id="通过type创建一个对象"><a class="markdownIt-Anchor" href="#通过type创建一个对象"></a> 通过<code>type()</code>创建一个对象</h2><pre class="highlight"><code class="python"><span class="hljs-comment"># 语法：type(name, bases, dict)</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="There can be miracles when you believe">
+  <meta name="author" content="雅俊 Yajun">
+  <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
+  <title>Python元类 by TOXIC</title>
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css"  >
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="https://cdn.bootcss.com/mdbootstrap/4.8.7/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/github-v2.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"  >
+
+
+
+<link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于yajun</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 三月 17日 2019, 9:42 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    938 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      4 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>  了解python的元类以及相关概念。<a id="more"></a></p>
+<h2 id="__init__-vs-__new__"><a class="markdownIt-Anchor" href="#__init__-vs-__new__"></a> <code>__init__</code> v.s. <code>__new__</code></h2>
+<table>
+<thead>
+<tr>
+<th>魔术方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__init__</code>方法</td>
+<td>在实例创建后调用，<br>初始化实例对象，是实例级别的方法。</td>
+</tr>
+<tr>
+<td><code>__new__</code>方法</td>
+<td>在实例创建前调用，<br>创建具体实例，是类级别的方法。</td>
+</tr>
+</tbody>
+</table>
+<p>  通过<code>__new__</code>方法可以动态的控制实例生成。利用这个，可以很容易的实现Singleton.</p>
+<h2 id="type-vs-object的关系"><a class="markdownIt-Anchor" href="#type-vs-object的关系"></a> <code>type</code> v.s. <code>object</code>的关系</h2>
+<p>  两者的关系是嵌套的，深入理解需要剖析python源码。参考知乎：</p>
+<blockquote>
+<p><a href="https://www.zhihu.com/question/38791962" target="_blank" rel="noopener">Python 的 type 和 object 之间是怎么一种关系？</a></p>
+</blockquote>
+<ul>
+<li>Python中一切皆对象，<code>object</code>是一切对象的父类。</li>
+<li><code>type</code>也是对象，必然继承<code>object</code>.</li>
+<li>每个对象中有一个描述该对象类型的类型对象，用来描述对象创建时需要内存大小等。</li>
+<li>而<code>type</code>是所有类型对象的父类，<code>object</code>中类型对象就是<code>type</code>，<code>type</code>的类型对象也是<code>type</code>。</li>
+</ul>
+<p><img src="/images/figure/python-metaclass1.jpg" srcset="/img/loading.gif" alt="type v.s. object" /></p>
+<h2 id="通过type创建一个对象"><a class="markdownIt-Anchor" href="#通过type创建一个对象"></a> 通过<code>type()</code>创建一个对象</h2>
+<pre class="highlight"><code class="python"><span class="hljs-comment"># 语法：type(name, bases, dict)</span>
 <span class="hljs-meta">&gt;&gt;&gt; </span>X = type(<span class="hljs-string">'X'</span>, (object,), dict(a=<span class="hljs-number">1</span>))  <span class="hljs-comment"># 产生一个新的类型 X</span>
 <span class="hljs-meta">&gt;&gt;&gt; </span>X
 <span class="hljs-meta">&gt;&gt;&gt; </span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">__main__</span>.<span class="hljs-title">X</span>'&gt;
-</span></code></pre><h2 id="class的生成"><a class="markdownIt-Anchor" href="#class的生成"></a> class的生成</h2><blockquote><p>参考博客<a href="https://blog.csdn.net/z_ipython/article/details/92798640" target="_blank" rel="noopener">Python中type()详解:动态创建类</a></p></blockquote><p>  对于Python解释器而言，使用class定义Animal类时，相当于创建了class_object对象，然后将其赋值给<code>Animal</code>变量。</p><pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span><span class="hljs-params">(object)</span>:</span>
+</span></code></pre>
+<h2 id="class的生成"><a class="markdownIt-Anchor" href="#class的生成"></a> class的生成</h2>
+<blockquote>
+<p>参考博客<a href="https://blog.csdn.net/z_ipython/article/details/92798640" target="_blank" rel="noopener">Python中type()详解:动态创建类</a></p>
+</blockquote>
+<p>  对于Python解释器而言，使用class定义Animal类时，相当于创建了class_object对象，然后将其赋值给<code>Animal</code>变量。</p>
+<pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span><span class="hljs-params">(object)</span>:</span>
     name = <span class="hljs-string">"a"</span>
 
 <span class="hljs-comment"># 相当于</span>
 class_object = type(<span class="hljs-string">"Animal"</span>, (object,), dict(name=<span class="hljs-string">"a"</span>))
 Animal = class_object
-</code></pre><p>  默认的class就是通过<code>type</code>生成的，当然仅仅使用<code>type</code>来生成一个class，实在是太麻烦了，所以有了下面的元类编程。</p><h2 id="元类编程"><a class="markdownIt-Anchor" href="#元类编程"></a> 元类编程</h2><blockquote><p>借鉴博客<a href="https://www.cnblogs.com/tkqasn/p/6524879.html" target="_blank" rel="noopener">深刻理解Python中的元类</a>中的描述metaclass的使用过程：</p></blockquote><pre class="highlight"><code class="python"><span class="hljs-comment"># 原先定义class</span>
+</code></pre>
+<p>  默认的class就是通过<code>type</code>生成的，当然仅仅使用<code>type</code>来生成一个class，实在是太麻烦了，所以有了下面的元类编程。</p>
+<h2 id="元类编程"><a class="markdownIt-Anchor" href="#元类编程"></a> 元类编程</h2>
+<blockquote>
+<p>借鉴博客<a href="https://www.cnblogs.com/tkqasn/p/6524879.html" target="_blank" rel="noopener">深刻理解Python中的元类</a>中的描述metaclass的使用过程：</p>
+</blockquote>
+<pre class="highlight"><code class="python"><span class="hljs-comment"># 原先定义class</span>
 MyClass = type(<span class="hljs-string">"MyClass"</span>, (object,), dict(name=<span class="hljs-string">"a"</span>))
 
 <span class="hljs-comment"># 通过metaclass定义class的伪代码</span>
@@ -18,7 +248,12 @@ MyObject = MyClass()     <span class="hljs-comment"># 通过类创建实例</spa
 <span class="hljs-comment"># 实际使用metaclass</span>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span><span class="hljs-params">(object, metaclass = MetaClass<span class="hljs-params">()</span>)</span>:</span>
     <span class="hljs-keyword">pass</span>
-</code></pre><p>  <code>MetaClass</code>如何创建出<code>MyClass</code>呢？肯定还是通过<code>type</code>来创造，但是细节封装在了<code>MetaClass</code>中。<code>MyClass</code>本身也是类，也可以创建出自己的实例，这里就是<code>MyObject</code>。</p><p>  可见，<strong>所有对象归根到底还是<code>type</code> 实例化出来的</strong>。通过metaclass可以方便的动态生成一个class。不过实际中，几乎用不到元类编程。</p><h2 id="orm实例"><a class="markdownIt-Anchor" href="#orm实例"></a> ORM实例</h2><p>  廖雪峰教程中使用ORM作为例子因为orm中，表对应的class需要根据schema信息动态生成。</p><pre class="highlight"><code class="python">
+</code></pre>
+<p>  <code>MetaClass</code>如何创建出<code>MyClass</code>呢？肯定还是通过<code>type</code>来创造，但是细节封装在了<code>MetaClass</code>中。<code>MyClass</code>本身也是类，也可以创建出自己的实例，这里就是<code>MyObject</code>。</p>
+<p>  可见，<strong>所有对象归根到底还是<code>type</code> 实例化出来的</strong>。通过metaclass可以方便的动态生成一个class。不过实际中，几乎用不到元类编程。</p>
+<h2 id="orm实例"><a class="markdownIt-Anchor" href="#orm实例"></a> ORM实例</h2>
+<p>  廖雪峰教程中使用ORM作为例子因为orm中，表对应的class需要根据schema信息动态生成。</p>
+<pre class="highlight"><code class="python">
 <span class="hljs-string">"""
 metaclass编程，动态定义类。
 """</span>
@@ -100,7 +335,254 @@ metaclass编程，动态定义类。
 
 u = UserTable(id=<span class="hljs-number">888</span>, name=<span class="hljs-string">'Michael'</span>, pwd=<span class="hljs-number">123456</span>)
 u.save()
-</code></pre><hr></div><br><div id="wechat_subscriber" style="display:block;margin:10px auto;width:100%;text-align:center"> <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width:200px;max-width:100%"></div><div id="reward-container"><div></div> <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';"> 打赏</button><div id="qr" style="display:none"><div style="display:inline-block"> <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width:200px;max-width:100%"></div></div></div><div><p><span><i class="iconfont icon-inbox"></i> <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a> <a class="hover-with-bg" href="/categories/infomation-tech/cs-basic/">计算机基础</a></span> &nbsp;&nbsp;<span><i class="iconfont icon-tag"></i> <a class="hover-with-bg" href="/tags/Python/">Python</a></span></p><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container"><div id="toc"><p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p><div id="tocbot"></div></div></div></div></div><div class="col-lg-7 mx-auto nopadding-md"><div class="container comments mx-auto" id="comments"><br><br><div id="vcomments" style="width:90%;margin:0 auto"></div><script defer="defer" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script defer="defer" src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var notify=!1,verify=!1,oldLoad=window.onload;window.onload=function(){new Valine({el:"#vcomments",notify:notify,verify:verify,app_id:"BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",app_key:"7vVR2eHglETeQCeqoSoff3Ek",placeholder:"说点什么",avatar:"mp",meta:["nick","mail","link"],pageSize:"10"}),oldLoad&&oldLoad()}</script><noscript>Please enable JavaScript to view the<a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript></div></div></main><a class="z-depth-1" id="scroll-top-button" href="#" role="button"><i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><footer class="mt-5"><div class="text-center py-3"><i class="iconfont icon-love"></i> <a href="/about/" target="_self" rel="nofollow noopener"><b>Yajun</b></a><br> &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量<span id="busuanzi_value_site_pv"></span> 次&nbsp; &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数<span id="busuanzi_value_site_uv"></span> 人&nbsp;<br></div></footer><script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.bootcss.com/popper.js/1.14.4/umd/popper.min.js"></script><script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script><script src="https://cdn.bootcss.com/mdbootstrap/4.8.7/js/mdb.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.bootcss.com/tocbot/4.10.0/tocbot.min.js"></script><script src="/js/post.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/lib/prettify/prettify.min.js"></script><script>$(document).ready(function(){$("pre").addClass("prettyprint  linenums"),prettyPrint()})</script><script src="https://cdn.bootcss.com/typed.js/2.0.5/typed.min.js"></script><script>var typed=new Typed("#subtitle",{strings:["  ","Python元类&nbsp;"],cursorChar:"_",typeSpeed:80,loop:!1});typed.stop(),$(document).ready(function(){$(".typed-cursor").addClass("h2"),typed.start()})</script><script src="https://cdn.bootcss.com/anchor-js/4.2.0/anchor.min.js"></script><script>
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+
+          
+            <div id="wechat_subscriber" style="display: block; margin: 10px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width: 200px; max-width: 100%;">
+</div>
+
+          
+          
+            <div id="reward-container">
+    <div></div>
+    <button id="reward-button" disable="enable"
+            onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+        打赏
+    </button>
+    <div id="qr" style="display: none;">
+        
+            <div style="display: inline-block">
+                
+                <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width: 200px; max-width: 100%;">
+            </div>
+        
+
+    </div>
+</div>
+
+          
+
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a>
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/cs-basic/">计算机基础</a>
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Python/">Python</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var notify = 'false' === true;
+    var verify = 'true' === true;
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",
+        app_key: "7vVR2eHglETeQCeqoSoff3Ek",
+        placeholder: "说点什么",
+        avatar: "mp",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <i class="iconfont icon-love"></i>
+    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js" ></script>
+<script src="https://cdn.bootcss.com/popper.js/1.14.4/umd/popper.min.js" ></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+<script src="https://cdn.bootcss.com/mdbootstrap/4.8.7/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="https://cdn.bootcss.com/tocbot/4.10.0/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="https://cdn.bootcss.com/typed.js/2.0.5/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Python元类&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 80,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="https://cdn.bootcss.com/anchor-js/4.2.0/anchor.min.js" ></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "false",
@@ -112,7 +594,24 @@ u.save()
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>var path="/local-search.xml",inputArea=document.querySelector("#local-search-input");inputArea.onclick=function(){getSearchFile(path),this.onclick=null}</script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  <script>
     // $("#post img:not(.no-zoom img, img[no-zoom])").each(
     //   function () {
     //     var element = document.createElement("a");
@@ -140,4 +639,18 @@ u.save()
               $link.attr('href', href)
             }
     );
-  </script></body></html>
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,17 +1,233 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png"><link rel="icon" type="image/png" href="/img/favicon.png"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="There can be miracles when you believe"><meta name="author" content="雅俊 Yajun"><meta name="keywords" content="Deep Learning, Computer Science, Mathematics"><title>RDD和DataFrame的相互转化 by TOXIC</title><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/mdbootstrap/4.8.7/css/mdb.min.css"><link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css"><link rel="stylesheet" href="/lib/prettify/github-v2.min.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"><link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet"><meta name="generator" content="Hexo 4.2.0"></head><body><header style="height:40vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"> <a class="navbar-brand" href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"> <a class="nav-link" href="/">首页</a></li><li class="nav-item"> <a class="nav-link" href="/archives/">归档</a></li><li class="nav-item"> <a class="nav-link" href="/categories/">分类</a></li><li class="nav-item"> <a class="nav-link" href="/tags/">标签</a></li><li class="nav-item"> <a class="nav-link" href="/about/">关于yajun</a></li><li class="nav-item"> <a class="nav-link" href="/links/">友链</a></li><li class="nav-item" id="search-btn"> <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a></li></ul></div></div></nav><div class="view intro-2" id="background" false style="background:url(/img/default.png) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask rgba-black-light flex-center"><div class="container text-center white-text fadeInUp"><span class="h2" id="subtitle"></span><br><p class="mt-3"><i class="fas fa-calendar-alt" aria-hidden="true"></i> &nbsp; 星期五, 十一月 30日 2018, 10:37 晚上</p><p> &nbsp;<i class="far fa-chart-bar"></i> <span class="post-count">1.7k 字</span> &nbsp; &nbsp;<i class="far fa-clock"></i> <span class="post-count">7 分钟</span> &nbsp; &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;<span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span> 次</span> &nbsp;</p></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="py-5 z-depth-3" id="board"><div class="post-content mx-auto" id="post"><div class="markdown-body"><p>PySpark中RDD和DataFrame的转换，并提供一个快捷生成schema的脚手架。<a id="more"></a></p><h2 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h2><blockquote><p><strong>RDD</strong>：弹性分布数据集，是Spark的基本数据抽象。 为了有效地实现容错，RDD提供了一种<ins>高度受限的共享内存</ins>,即RDD是只读的,并且只能通过其他RDD上的批量操作来创建。</p></blockquote><blockquote><p><strong>DataFrame</strong>: Spark SQL模块引入的核心数据抽象，在RDD的基础上添加Schema信息。DataFrame是Row型RDD。在这个RDD中，每个元素类型相同且是Row型。Row这种数据结构类似字典，它为RDD提供了schema信息（列的名称及其类型），使得DataFrame更像表格。具体差别可以查看<a href="https://blog.csdn.net/hellozhxy/article/details/82660610" target="_blank" rel="noopener">Spark RDD与DataFrame</a></p></blockquote><ul><li>Spark机器学习包：RDD用spark mllib；DataFrame用spark ML。</li><li>DataFrame支持一些更高级的保存方式：parquet，csv等。</li><li>SparkSQL提供了操作DataFrame的api。</li></ul><h2 id="dataframe转rdd"><a class="markdownIt-Anchor" href="#dataframe转rdd"></a> DataFrame转RDD</h2><p>  DataFrame转RDD非常简单，因为可以将DataFrame视为Row型的RDD。直接使用RDD的<code>map</code>方法或者使用DataFrame的<code>rdd</code>方法都可以形成新的RDD。</p><h3 id="通过map方法"><a class="markdownIt-Anchor" href="#通过map方法"></a> 通过map方法</h3><pre class="highlight"><code class="python">df = df.select([<span class="hljs-string">"user"</span>, <span class="hljs-string">"item"</span>, <span class="hljs-string">"score"</span>])
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="There can be miracles when you believe">
+  <meta name="author" content="雅俊 Yajun">
+  <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
+  <title>RDD和DataFrame的相互转化 by TOXIC</title>
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css"  >
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="https://cdn.bootcss.com/mdbootstrap/4.8.7/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/github-v2.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"  >
+
+
+
+<link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>TOXIC</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于yajun</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期五, 十一月 30日 2018, 10:37 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.7k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      7 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>PySpark中RDD和DataFrame的转换，并提供一个快捷生成schema的脚手架。<a id="more"></a></p>
+<h2 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h2>
+<blockquote>
+<p><strong>RDD</strong>：弹性分布数据集，是Spark的基本数据抽象。 为了有效地实现容错，RDD提供了一种<ins>高度受限的共享内存</ins>,即RDD是只读的,并且只能通过其他RDD上的批量操作来创建。</p>
+</blockquote>
+<blockquote>
+<p><strong>DataFrame</strong>: Spark SQL模块引入的核心数据抽象，在RDD的基础上添加Schema信息。DataFrame是Row型RDD。在这个RDD中，每个元素类型相同且是Row型。Row这种数据结构类似字典，它为RDD提供了schema信息（列的名称及其类型），使得DataFrame更像表格。具体差别可以查看<a href="https://blog.csdn.net/hellozhxy/article/details/82660610" target="_blank" rel="noopener">Spark RDD与DataFrame</a></p>
+</blockquote>
+<ul>
+<li>Spark机器学习包：RDD用spark mllib；DataFrame用spark ML。</li>
+<li>DataFrame支持一些更高级的保存方式：parquet，csv等。</li>
+<li>SparkSQL提供了操作DataFrame的api。</li>
+</ul>
+<h2 id="dataframe转rdd"><a class="markdownIt-Anchor" href="#dataframe转rdd"></a> DataFrame转RDD</h2>
+<p>  DataFrame转RDD非常简单，因为可以将DataFrame视为Row型的RDD。直接使用RDD的<code>map</code>方法或者使用DataFrame的<code>rdd</code>方法都可以形成新的RDD。</p>
+<h3 id="通过map方法"><a class="markdownIt-Anchor" href="#通过map方法"></a> 通过map方法</h3>
+<pre class="highlight"><code class="python">df = df.select([<span class="hljs-string">"user"</span>, <span class="hljs-string">"item"</span>, <span class="hljs-string">"score"</span>])
 rdd = df.map(tuple)
-</code></pre><h3 id="通过rdd方法"><a class="markdownIt-Anchor" href="#通过rdd方法"></a> 通过rdd方法</h3><pre class="highlight"><code class="python">df = df.select([<span class="hljs-string">"user"</span>, <span class="hljs-string">"item"</span>, <span class="hljs-string">"score"</span>])
+</code></pre>
+<h3 id="通过rdd方法"><a class="markdownIt-Anchor" href="#通过rdd方法"></a> 通过rdd方法</h3>
+<pre class="highlight"><code class="python">df = df.select([<span class="hljs-string">"user"</span>, <span class="hljs-string">"item"</span>, <span class="hljs-string">"score"</span>])
 rdd = df.rdd
 rdd1 = rdd.map(<span class="hljs-keyword">lambda</span> p:(p[<span class="hljs-string">"user"</span>], p[<span class="hljs-string">"item"</span>], p[<span class="hljs-string">"score"</span>]))
-</code></pre><p>  通过<code>rdd</code>方法得到的rdd，其中的每个元素的数据类型是Row型。Row对象类似于一个字典，但是不可以更改。</p><h2 id="rdd转dataframe"><a class="markdownIt-Anchor" href="#rdd转dataframe"></a> RDD转DataFrame</h2><p>  由于DataFrame更适合保存Hive表（详见<a href="https://yinyajun.github.io/CS-Data/spark_01/">Pyspark处理Hive表</a>），所以经常需要将RDD转为DataFrame。<strong>主要思路就是如何为RDD添加schema信息。</strong></p><h3 id="todf方法自动类型推导"><a class="markdownIt-Anchor" href="#todf方法自动类型推导"></a> toDF方法自动类型推导</h3><p>  toDF()方法会根据RDD的前100个元素自动推导该列的类型。</p><pre class="highlight"><code class="python">rdd = sc.parallelize([(<span class="hljs-string">'aliance'</span>,<span class="hljs-number">5</span>),(<span class="hljs-string">'horde'</span>, <span class="hljs-number">3</span>)])
+</code></pre>
+<p>  通过<code>rdd</code>方法得到的rdd，其中的每个元素的数据类型是Row型。Row对象类似于一个字典，但是不可以更改。</p>
+<h2 id="rdd转dataframe"><a class="markdownIt-Anchor" href="#rdd转dataframe"></a> RDD转DataFrame</h2>
+<p>  由于DataFrame更适合保存Hive表（详见<a href="https://yinyajun.github.io/CS-Data/spark_01/">Pyspark处理Hive表</a>），所以经常需要将RDD转为DataFrame。<strong>主要思路就是如何为RDD添加schema信息。</strong></p>
+<h3 id="todf方法自动类型推导"><a class="markdownIt-Anchor" href="#todf方法自动类型推导"></a> toDF方法自动类型推导</h3>
+<p>  toDF()方法会根据RDD的前100个元素自动推导该列的类型。</p>
+<pre class="highlight"><code class="python">rdd = sc.parallelize([(<span class="hljs-string">'aliance'</span>,<span class="hljs-number">5</span>),(<span class="hljs-string">'horde'</span>, <span class="hljs-number">3</span>)])
 df = rdd.toDF()
-</code></pre><p>  很方便就得到了新的DataFrame，通过自动类型推导，得到列的数据类型。等等，这个列名<code>_1</code>等好像是随便起的。</p><pre class="highlight"><code class="python">columns = [<span class="hljs-string">'name'</span>, <span class="hljs-string">'score'</span>]
+</code></pre>
+<p>  很方便就得到了新的DataFrame，通过自动类型推导，得到列的数据类型。等等，这个列名<code>_1</code>等好像是随便起的。</p>
+<pre class="highlight"><code class="python">columns = [<span class="hljs-string">'name'</span>, <span class="hljs-string">'score'</span>]
 df = rdd.toDF(columns)
-</code></pre><p>  通过添加<code>columns</code>作为<code>toDF</code>的参数来指定列名。特别的，如果RDD本身就是Row型的，那么列名的信息就不需要额外提供了，但是数据类型的信息还是通过自动类型推导得来的。</p><pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql <span class="hljs-keyword">import</span> Row
+</code></pre>
+<p>  通过添加<code>columns</code>作为<code>toDF</code>的参数来指定列名。特别的，如果RDD本身就是Row型的，那么列名的信息就不需要额外提供了，但是数据类型的信息还是通过自动类型推导得来的。</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql <span class="hljs-keyword">import</span> Row
 rdd = sc.parallelize([Row(name=<span class="hljs-string">'Alice'</span>,age=<span class="hljs-number">5</span>,height=<span class="hljs-number">80</span>),
                      Row(name=<span class="hljs-string">'Bob'</span>,age=<span class="hljs-number">10</span>,height=<span class="hljs-number">80</span>)])
 df = rdd.toDF()
-</code></pre><p>  如果RDD前100个元素中某些列的值全是空，那么将会无法进行自动类型推导。会有以下报错： <code>ValueError: Some of types cannot be determined after inferring.</code>需要一种能指定schema信息的方式，直接告诉RDD对应类型。</p><h3 id="查看schema信息"><a class="markdownIt-Anchor" href="#查看schema信息"></a> 查看schema信息</h3><p>  对一个已有的DataFrame，以下方法可以查看当前DataFrame的schema信息</p><pre class="highlight"><code class="python">df.printSchema() <span class="hljs-comment"># 打印schema信息</span>
+</code></pre>
+<p>  如果RDD前100个元素中某些列的值全是空，那么将会无法进行自动类型推导。会有以下报错： <code>ValueError: Some of types cannot be determined after inferring.</code>需要一种能指定schema信息的方式，直接告诉RDD对应类型。</p>
+<h3 id="查看schema信息"><a class="markdownIt-Anchor" href="#查看schema信息"></a> 查看schema信息</h3>
+<p>  对一个已有的DataFrame，以下方法可以查看当前DataFrame的schema信息</p>
+<pre class="highlight"><code class="python">df.printSchema() <span class="hljs-comment"># 打印schema信息</span>
 <span class="hljs-comment"># root</span>
 <span class="hljs-comment">#  |-- age: integer (nullable = true)</span>
 <span class="hljs-comment">#  |-- name: string (nullable = true)</span>
@@ -20,8 +236,14 @@ df = rdd.toDF()
 schema = df.schema <span class="hljs-comment"># 直接得到当前df的schema，是StructType类型。</span>
 <span class="hljs-comment"># StructType(List(StructField(age,IntegerType,true),</span>
 <span class="hljs-comment">#                 StructField(name,StringType,true)))</span>
-</code></pre><p>  可以发现<code>StructField</code>对象相当于一个字段，它有这个字段的<code>name</code>,<code>dataType</code>和<code>nullable</code>。</p><pre class="highlight"><code class="scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StructType</span>(<span class="hljs-params">fields: <span class="hljs-type">Array</span>[<span class="hljs-type">StructField</span>]</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">DataType</span> <span class="hljs-keyword">with</span> <span class="hljs-title">Seq</span>[<span class="hljs-type">StructField</span>] </span>{}
-</code></pre><p>  而从<code>StructType</code>的定义来看，<code>StructType</code>相当于一个集合，里面的元素都是<code>StructField</code>类型。而所谓的schema信息就是一个<code>StructField</code>的集合<code>StructType</code>。</p><h3 id="构造schema信息"><a class="markdownIt-Anchor" href="#构造schema信息"></a> 构造schema信息</h3><p>  通过<code>StructType</code>构造出schema信息，在将schema作为toDF()的参数，就能直接将RDD转为DataFrame了。</p><pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> StructType, StructField, IntegerType, StringType, ArrayType
+</code></pre>
+<p>  可以发现<code>StructField</code>对象相当于一个字段，它有这个字段的<code>name</code>,<code>dataType</code>和<code>nullable</code>。</p>
+<pre class="highlight"><code class="scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StructType</span>(<span class="hljs-params">fields: <span class="hljs-type">Array</span>[<span class="hljs-type">StructField</span>]</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">DataType</span> <span class="hljs-keyword">with</span> <span class="hljs-title">Seq</span>[<span class="hljs-type">StructField</span>] </span>{}
+</code></pre>
+<p>  而从<code>StructType</code>的定义来看，<code>StructType</code>相当于一个集合，里面的元素都是<code>StructField</code>类型。而所谓的schema信息就是一个<code>StructField</code>的集合<code>StructType</code>。</p>
+<h3 id="构造schema信息"><a class="markdownIt-Anchor" href="#构造schema信息"></a> 构造schema信息</h3>
+<p>  通过<code>StructType</code>构造出schema信息，在将schema作为toDF()的参数，就能直接将RDD转为DataFrame了。</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> StructType, StructField, IntegerType, StringType, ArrayType
 schema = StructType([
     StructField(<span class="hljs-string">"name"</span>, StringType(), <span class="hljs-literal">False</span>), 
     StructField(<span class="hljs-string">"age"</span>, IntegerType(), <span class="hljs-literal">False</span>), 
@@ -29,7 +251,11 @@ schema = StructType([
     StructField(<span class="hljs-string">"scores"</span>, ArrayType(IntergerType()))
 ])
 df = rdd.toDF(schema)
-</code></pre><p>  这个方法最为稳妥，但是编写schema信息麻烦。当列特别多且只想增加或者删除某几列的时候，写一套schema信息实在恶心。</p><h3 id="schemahelper快速得到schema"><a class="markdownIt-Anchor" href="#schemahelper快速得到schema"></a> SchemaHelper快速得到schema</h3><p>  当一个DataFrame的现有api无法完成任务时，需要切换成RDD处理，再变回DataFrame。如果此时转DataFrame无法自动类型推导的时候，那么这个<strong>脚手架</strong>可以帮助你快速得到schema信息。它的使用方法如下：</p><pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> *
+</code></pre>
+<p>  这个方法最为稳妥，但是编写schema信息麻烦。当列特别多且只想增加或者删除某几列的时候，写一套schema信息实在恶心。</p>
+<h3 id="schemahelper快速得到schema"><a class="markdownIt-Anchor" href="#schemahelper快速得到schema"></a> SchemaHelper快速得到schema</h3>
+<p>  当一个DataFrame的现有api无法完成任务时，需要切换成RDD处理，再变回DataFrame。如果此时转DataFrame无法自动类型推导的时候，那么这个<strong>脚手架</strong>可以帮助你快速得到schema信息。它的使用方法如下：</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">from</span> helper <span class="hljs-keyword">import</span> StructCollect
 
 cols = [<span class="hljs-string">'user'</span>, <span class="hljs-string">'scores'</span>]
@@ -49,7 +275,17 @@ print(schema)
 <span class="hljs-comment"># append:添加新的fields，得到新的schema</span>
 schema = schema.append(<span class="hljs-string">"items:array&lt;int&gt;, education:string"</span>)
 print(schema)
-</code></pre><p>  这里有详细<a href="https://github.com/yinyajun/Sundries/tree/master/utils/Spark/Schema%20Helper" target="_blank" rel="noopener">代码和单元测试。</a>下面列出了脚手架的源码，写的时候思路是这样的：</p><ol><li>schema信息是一个<code>StructField</code>的集合<code>StructType</code>。那么构造一个<code>StructType</code>的子类，并添加一些能方便生成schema的方法就行了。</li><li><code>StructType</code>本身通过<code>fields</code>和<code>names</code>两个成员维护schema的列和列名信息。</li><li><code>StructType</code>本身提供<code>add</code>方法添加一个field并维护本身成员变量的更新。</li><li>子类<code>StructCollect</code>的初始化schema来自于某个原始dataframe。</li><li>额外添加<code>remove</code>,<code>get</code>,<code>merge</code>三个方法，分别对应从schema中移除列，查看列和合并另一个dataframe的schema。</li><li>看到Spark1.6.0后有一个现成的能将string解析为<code>StructType</code>的方法<code>_parse_datatype_string</code>，扒过来添加到<code>append</code>方法中去。</li></ol><pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> *
+</code></pre>
+<p>  这里有详细<a href="https://github.com/yinyajun/Sundries/tree/master/utils/Spark/Schema%20Helper" target="_blank" rel="noopener">代码和单元测试。</a>下面列出了脚手架的源码，写的时候思路是这样的：</p>
+<ol>
+<li>schema信息是一个<code>StructField</code>的集合<code>StructType</code>。那么构造一个<code>StructType</code>的子类，并添加一些能方便生成schema的方法就行了。</li>
+<li><code>StructType</code>本身通过<code>fields</code>和<code>names</code>两个成员维护schema的列和列名信息。</li>
+<li><code>StructType</code>本身提供<code>add</code>方法添加一个field并维护本身成员变量的更新。</li>
+<li>子类<code>StructCollect</code>的初始化schema来自于某个原始dataframe。</li>
+<li>额外添加<code>remove</code>,<code>get</code>,<code>merge</code>三个方法，分别对应从schema中移除列，查看列和合并另一个dataframe的schema。</li>
+<li>看到Spark1.6.0后有一个现成的能将string解析为<code>StructType</code>的方法<code>_parse_datatype_string</code>，扒过来添加到<code>append</code>方法中去。</li>
+</ol>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">from</span> pyspark <span class="hljs-keyword">import</span> SparkContext
 
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_ignore_brackets_split</span><span class="hljs-params">(s, separator)</span>:</span>
@@ -176,7 +412,254 @@ print(schema)
         <span class="hljs-keyword">assert</span> name <span class="hljs-keyword">in</span> self.names
         idx = self.names.index(name)
         <span class="hljs-keyword">return</span> self.fields[idx]
-</code></pre><hr></div><br><div id="wechat_subscriber" style="display:block;margin:10px auto;width:100%;text-align:center"> <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width:200px;max-width:100%"></div><div id="reward-container"><div></div> <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';"> 打赏</button><div id="qr" style="display:none"><div style="display:inline-block"> <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width:200px;max-width:100%"></div></div></div><div><p><span><i class="iconfont icon-inbox"></i> <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a> <a class="hover-with-bg" href="/categories/infomation-tech/data-process/">数据处理</a></span> &nbsp;&nbsp;<span><i class="iconfont icon-tag"></i> <a class="hover-with-bg" href="/tags/Spark/">Spark</a></span></p><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p></div></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container"><div id="toc"><p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p><div id="tocbot"></div></div></div></div></div><div class="col-lg-7 mx-auto nopadding-md"><div class="container comments mx-auto" id="comments"><br><br><div id="vcomments" style="width:90%;margin:0 auto"></div><script defer="defer" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script defer="defer" src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var notify=!1,verify=!1,oldLoad=window.onload;window.onload=function(){new Valine({el:"#vcomments",notify:notify,verify:verify,app_id:"BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",app_key:"7vVR2eHglETeQCeqoSoff3Ek",placeholder:"说点什么",avatar:"mp",meta:["nick","mail","link"],pageSize:"10"}),oldLoad&&oldLoad()}</script><noscript>Please enable JavaScript to view the<a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript></div></div></main><a class="z-depth-1" id="scroll-top-button" href="#" role="button"><i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4> <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"> <input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><footer class="mt-5"><div class="text-center py-3"><i class="iconfont icon-love"></i> <a href="/about/" target="_self" rel="nofollow noopener"><b>Yajun</b></a><br> &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量<span id="busuanzi_value_site_pv"></span> 次&nbsp; &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数<span id="busuanzi_value_site_uv"></span> 人&nbsp;<br></div></footer><script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.bootcss.com/popper.js/1.14.4/umd/popper.min.js"></script><script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script><script src="https://cdn.bootcss.com/mdbootstrap/4.8.7/js/mdb.min.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script src="https://cdn.bootcss.com/tocbot/4.10.0/tocbot.min.js"></script><script src="/js/post.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/lib/prettify/prettify.min.js"></script><script>$(document).ready(function(){$("pre").addClass("prettyprint  linenums"),prettyPrint()})</script><script src="https://cdn.bootcss.com/typed.js/2.0.5/typed.min.js"></script><script>var typed=new Typed("#subtitle",{strings:["  ","RDD和DataFrame的相互转化&nbsp;"],cursorChar:"_",typeSpeed:80,loop:!1});typed.stop(),$(document).ready(function(){$(".typed-cursor").addClass("h2"),typed.start()})</script><script src="https://cdn.bootcss.com/anchor-js/4.2.0/anchor.min.js"></script><script>
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+
+          
+            <div id="wechat_subscriber" style="display: block; margin: 10px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width: 200px; max-width: 100%;">
+</div>
+
+          
+          
+            <div id="reward-container">
+    <div></div>
+    <button id="reward-button" disable="enable"
+            onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+        打赏
+    </button>
+    <div id="qr" style="display: none;">
+        
+            <div style="display: inline-block">
+                
+                <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width: 200px; max-width: 100%;">
+            </div>
+        
+
+    </div>
+</div>
+
+          
+
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a>
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/data-process/">数据处理</a>
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Spark/">Spark</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var notify = 'false' === true;
+    var verify = 'true' === true;
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",
+        app_key: "7vVR2eHglETeQCeqoSoff3Ek",
+        placeholder: "说点什么",
+        avatar: "mp",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <i class="iconfont icon-love"></i>
+    <a href="/about/" target="_self" rel="nofollow noopener"> <b>Yajun</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js" ></script>
+<script src="https://cdn.bootcss.com/popper.js/1.14.4/umd/popper.min.js" ></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+<script src="https://cdn.bootcss.com/mdbootstrap/4.8.7/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="https://cdn.bootcss.com/tocbot/4.10.0/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="https://cdn.bootcss.com/typed.js/2.0.5/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "RDD和DataFrame的相互转化&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 80,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="https://cdn.bootcss.com/anchor-js/4.2.0/anchor.min.js" ></script>
+  <script>
     anchors.options = {
       placement: "right",
       visible: "false",
@@ -188,7 +671,24 @@ print(schema)
       res.push(".markdown-body > " + item)
     }
     anchors.add(res.join(", "))
-  </script><script src="/js/local-search.js"></script><script>var path="/local-search.xml",inputArea=document.querySelector("#local-search-input");inputArea.onclick=function(){getSearchFile(path),this.onclick=null}</script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script><script>
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  <script>
     // $("#post img:not(.no-zoom img, img[no-zoom])").each(
     //   function () {
     //     var element = document.createElement("a");
@@ -216,4 +716,18 @@ print(schema)
               $link.attr('href', href)
             }
     );
-  </script></body></html>
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
