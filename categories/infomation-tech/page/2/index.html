@@ -147,12 +147,18 @@
                 
 
 <div class="list-group">
-<!--  <p class="h4">共有 1 篇文章</p>-->
+<!--  <p class="h4">共有 2 篇文章</p>-->
   <hr>
   
     
       
       <p class="h5">2018</p>
+    
+    <a href="/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/data-structure-13/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">从2-3树到红黑树</span>
+      <span style="float: right;">08-31</span>
+    </a>
+  
     
     <a href="/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/python-decorator/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">Python装饰器</span>
@@ -341,18 +347,32 @@
 
   <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
   <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
+    // $("#post img:not(.no-zoom img, img[no-zoom])").each(
+    //   function () {
+    //     var element = document.createElement("a");
+    //     $(element).attr("data-fancybox", "images");
+    //     $(element).attr("href", $(this).attr("src"));
+    //     $(this).wrap(element);
+    //
+    //     var imageTitle = $(this).attr('alt');
+    //     if (imageTitle){
+    //       $(element).appendChild(`<p class="image-caption">${imageTitle}</p>`);
+    //     }
+    //   }
+    // );
 
-        var imageTitle = $(this).attr('alt');
-        if (imageTitle){
-          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
-        }
-      }
+    // read alt tag and then make a title
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+            function () {
+              var imageTitle = $(this).attr('alt');
+              if (imageTitle){
+                    $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+                  }
+              var href = $(this).attr("src");
+              console.info(href);
+              var $link = $(this).wrap(`<a data-fancybox="images"></a>`).parent('a');
+              $link.attr('href', href)
+            }
     );
   </script>
 

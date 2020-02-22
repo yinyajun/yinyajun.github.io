@@ -147,7 +147,7 @@
                 
 
 <div class="list-group">
-  <p class="h4">共有 18 篇文章</p>
+  <p class="h4">共有 19 篇文章</p>
   <hr>
   
     
@@ -334,18 +334,32 @@
 
   <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
   <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
+    // $("#post img:not(.no-zoom img, img[no-zoom])").each(
+    //   function () {
+    //     var element = document.createElement("a");
+    //     $(element).attr("data-fancybox", "images");
+    //     $(element).attr("href", $(this).attr("src"));
+    //     $(this).wrap(element);
+    //
+    //     var imageTitle = $(this).attr('alt');
+    //     if (imageTitle){
+    //       $(element).appendChild(`<p class="image-caption">${imageTitle}</p>`);
+    //     }
+    //   }
+    // );
 
-        var imageTitle = $(this).attr('alt');
-        if (imageTitle){
-          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
-        }
-      }
+    // read alt tag and then make a title
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+            function () {
+              var imageTitle = $(this).attr('alt');
+              if (imageTitle){
+                    $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+                  }
+              var href = $(this).attr("src");
+              console.info(href);
+              var $link = $(this).wrap(`<a data-fancybox="images"></a>`).parent('a');
+              $link.attr('href', href)
+            }
     );
   </script>
 

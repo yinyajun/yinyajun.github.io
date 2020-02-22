@@ -155,6 +155,48 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/vim/" target="_self">
+          <img src="https://imgkr.cn-bj.ufileos.com/19eeaf41-7adf-48f3-a021-46f15496f7ff.jpg" alt="Vim插件ycm的安装【转载】" class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/vim/">
+        <p class="h4 index-header">Vim插件ycm的安装【转载】</p>
+      </a>
+
+      <a href="/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/vim/">
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">  按照不少教程，但是vim的ycm插件始终装不上，转载的这份教程很全。...</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-24&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/infomation-tech/">信息技术</a>&nbsp;
+          
+            <a href="/categories/infomation-tech/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/infomation-tech/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/bigdata-spark-02/" target="_self">
           <img src="https://imgkr.cn-bj.ufileos.com/e18dbd11-3d45-4b56-b600-ee8e0f4c8e93.jpg" alt="RDD和DataFrame的相互转化" class="index-img img-fluid rounded index-thumbnails">
         </a>
@@ -340,7 +382,7 @@
           
         
         <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">红黑树的发明人Robert Sedgewick，也是《算法4》的作者。所以《算法4》上的红黑树讲的要比《算法导论》的红黑树更清晰一点。从2-3树到红黑树....</div>
+          <div class="index-text mb-1">  红黑树的发明人Robert Sedgewick，也是《算法4》的作者。所以《算法4》上的红黑树讲的要比《算法导论》的红黑树更清晰一点。从2-3树到红黑树....</div>
         </div>
       </a>
 
@@ -669,18 +711,32 @@
 
   <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
   <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
+    // $("#post img:not(.no-zoom img, img[no-zoom])").each(
+    //   function () {
+    //     var element = document.createElement("a");
+    //     $(element).attr("data-fancybox", "images");
+    //     $(element).attr("href", $(this).attr("src"));
+    //     $(this).wrap(element);
+    //
+    //     var imageTitle = $(this).attr('alt');
+    //     if (imageTitle){
+    //       $(element).appendChild(`<p class="image-caption">${imageTitle}</p>`);
+    //     }
+    //   }
+    // );
 
-        var imageTitle = $(this).attr('alt');
-        if (imageTitle){
-          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
-        }
-      }
+    // read alt tag and then make a title
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+            function () {
+              var imageTitle = $(this).attr('alt');
+              if (imageTitle){
+                    $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+                  }
+              var href = $(this).attr("src");
+              console.info(href);
+              var $link = $(this).wrap(`<a data-fancybox="images"></a>`).parent('a');
+              $link.attr('href', href)
+            }
     );
   </script>
 

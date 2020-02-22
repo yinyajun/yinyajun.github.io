@@ -16,7 +16,7 @@
   <meta name="description" content="There can be miracles when you believe">
   <meta name="author" content="雅俊 Yajun">
   <meta name="keywords" content="Deep Learning, Computer Science, Mathematics">
-  <title>关于yajun by TOXIC</title>
+  <title>简单修改Hexo主题Fluid by TOXIC</title>
 
   <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css"  >
 <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"  >
@@ -42,7 +42,7 @@
 
 
 <body>
-  <header style="height: 50vh;">
+  <header style="height: 40vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -117,7 +117,7 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="view intro-2" id="background" false
          style="background: url('/img/default.png')no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -127,6 +127,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 二月 17日 2020, 7:36 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    343 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      1 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -138,88 +173,142 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>  新主题Fluid美观漂亮，但功能有些少，从Next主题移植一些功能。<a id="more"></a></p>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>  一年前用Hexo搭建了自己的博客，当时用的是最热的Next主题。除了不够美观外，Next主题可以说功能丰富。新主题<a href="https://fluid-dev.github.io/hexo-fluid-docs/" target="_blank" rel="noopener">fluid</a>的有些post的选项和原有主题有些冲突，因此重新搭建了一份博客来使用新的主题。通过移植Next主题的一些代码，为新主题添加一些额外功能。</p>
+<p>  不过我对前端真的不懂，css只懂简单的，改js代码的时候多半靠猜，模板全靠参考原有代码。有些写法实在是丑陋，目前只移植了一些简单的功能。添加功能的时候还发现了一些bug，已经pr到develop分支。</p>
+<p>  我fork了fluid项目，并将我的改动放到了<a href="https://github.com/yinyajun/hexo-theme-fluid/tree/explore" target="_blank" rel="noopener">explore分支</a>。如果你想要使用我简单修改过的Fluid主题，可以切到这个分支，或者找<a href="https://github.com/yinyajun/hexo-theme-fluid/tree/explore1.0" target="_blank" rel="noopener">tag-explore1.0</a>。</p>
+<h2 id="新添功能"><a class="markdownIt-Anchor" href="#新添功能"></a> 新添功能</h2>
+<ol>
+<li>为fancybox的图片添加caption。</li>
+<li>添加webfont思源宋体的支持（仅markdown-body内的文字）。</li>
+<li>为post添加打赏功能。</li>
+<li>为post添加展示微信二维码功能并保留动画。</li>
+<li>修改categories页面的展示方式，用card展示而不是难看的list。</li>
+<li>添加自定义css。</li>
+<li>将原有js库替换为cdn。</li>
+</ol>
+
+            <hr>
+          </div>
+          <br>
+
           
-            <div class="about-avatar">
-              <img src="/img/avatar.png"
-                   class="img-fluid z-depth-1 rounded-circle"
-                   alt="avatar">
-            </div>
+            <div id="wechat_subscriber" style="display: block; margin: 10px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width: 200px; max-width: 100%;">
+</div>
+
           
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+          
+            <div id="reward-container">
+    <div></div>
+    <button id="reward-button" disable="enable"
+            onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+        打赏
+    </button>
+    <div id="qr" style="display: none;">
+        
+            <div style="display: inline-block">
                 
-
-<div class="text-center">
-  <p class="h3">雅俊</p>
-  <p>推荐系统 / 机器学习 / 烹饪</p>
-  
-    
-    
-    <a href="https://github.com/yinyajun"
-       class="h4 px-1 ">
-      <i class="fab fa-github" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-    <a href="https://www.researchgate.net/profile/Yin_Yajun2"
-       class="h4 px-1 ">
-      <i class="fab fa-researchgate" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-    <a href="https://www.instagram.com/skyblueice234/"
-       class="h4 px-1 ">
-      <i class="fab fa-instagram" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-    <a href="mailto:skyblueice234@gmail.com"
-       class="h4 px-1 ">
-      <i class="fas fas fa-envelope-square" aria-hidden="true"></i>
-      
-    </a>
-  
-    
-    
-    <a href="javascript:;"
-       class="h4 px-1 wechat">
-      <i class="fab fa-weixin" aria-hidden="true"></i>
-      
-        <div class="wechat-qrcode"></div>
-      
-    </a>
-  
-</div>
-<div class="mt-5 markdown-body">
-  <p class=about-tagline style=text-align:center>
-<i>
-我听闻最美的故事，<br>
-是公主死去了，<br>
-屠龙的少年还在燃烧。<br>
-</i>
-</p>
-<p class=about-intro  style=text-indent:0>
-<span class=drop-cap>你</span>
-好，我是雅俊Yajun，欢迎来到我的博客。这个博客是利用Hexo生成的静态网页，分别部署在github和gitee上，目前使用的主题是简单修改过的<a href="https://fluid-dev.github.io/hexo-fluid-docs/guide/" target="_blank" rel="noopener">Fluid</a>。将近毕业时，转行投入CS的怀抱，目前的方向是做推荐系统的算法，也算是个初学者。
-<br>&emsp;&emsp;这里记录了我的学习历程和心得，以机器学习、计算机基础为主。对于世界的原始好奇心驱使我学习更多的东西，所以也会有一些人文社科、经济金融、艺术哲学等方面的学习笔记。点击上面微信图标，会弹出我的微信公众号的二维码，我会将精选的博客放在那里。在学习的过程中，我喜欢实践为主，所以github里有一些学习过程中做的小项目。
-</p>
-
-</div>
-
-              </div>
+                <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width: 200px; max-width: 100%;">
             </div>
+        
+
+    </div>
+</div>
+
+          
+
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/">信息技术</a>
+                  &nbsp;
+                
+                  <a class="hover-with-bg" href="/categories/infomation-tech/%E5%89%8D%E7%AB%AF/">前端</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Hexo/">Hexo</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var notify = 'false' === true;
+    var verify = 'true' === true;
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "BKJlcSTyeoUOWKCht1ugOavq-gzGzoHsz",
+        app_key: "7vVR2eHglETeQCeqoSoff3Ek",
+        placeholder: "说点什么",
+        avatar: "mp",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener"></a></noscript>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -297,6 +386,11 @@
 
 
 
+  
+    <script src="https://cdn.bootcss.com/tocbot/4.10.0/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
 
@@ -335,7 +429,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "关于yajun&nbsp;",
+        "简单修改Hexo主题Fluid&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 80,
@@ -411,6 +505,13 @@
   </script>
 
 
+
+  
+
+  
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css"  >
+  
 
 
 

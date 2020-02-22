@@ -141,7 +141,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    937 字
+                    938 字
                   </span>&nbsp;
                 
 
@@ -182,8 +182,8 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p>了解python的元类以及相关概念。<a id="more"></a></p>
-<h2 id="方法__init__-vs-__new__"><a class="markdownIt-Anchor" href="#方法__init__-vs-__new__"></a> 方法<code>__init__</code> v.s. <code>__new__</code></h2>
+            <p>  了解python的元类以及相关概念。<a id="more"></a></p>
+<h2 id="__init__-vs-__new__"><a class="markdownIt-Anchor" href="#__init__-vs-__new__"></a> <code>__init__</code> v.s. <code>__new__</code></h2>
 <table>
 <thead>
 <tr>
@@ -193,18 +193,18 @@
 </thead>
 <tbody>
 <tr>
-<td><code>__init__</code></td>
-<td>在实例创建后调用，初始化实例对象，是实例级别的方法。</td>
+<td><code>__init__</code>方法</td>
+<td>在实例创建后调用，<br>初始化实例对象，是实例级别的方法。</td>
 </tr>
 <tr>
-<td><code>__new__</code></td>
-<td>在实例创建前调用，创建具体实例，是类级别的方法。</td>
+<td><code>__new__</code>方法</td>
+<td>在实例创建前调用，<br>创建具体实例，是类级别的方法。</td>
 </tr>
 </tbody>
 </table>
-<p>通过<code>__new__</code>方法可以动态的控制实例生成。利用这个，可以很容易的实现Singleton.</p>
+<p>  通过<code>__new__</code>方法可以动态的控制实例生成。利用这个，可以很容易的实现Singleton.</p>
 <h2 id="type-vs-object的关系"><a class="markdownIt-Anchor" href="#type-vs-object的关系"></a> <code>type</code> v.s. <code>object</code>的关系</h2>
-<p>两者的关系是嵌套的，深入理解需要剖析python源码。参考知乎：</p>
+<p>  两者的关系是嵌套的，深入理解需要剖析python源码。参考知乎：</p>
 <blockquote>
 <p><a href="https://www.zhihu.com/question/38791962" target="_blank" rel="noopener">Python 的 type 和 object 之间是怎么一种关系？</a></p>
 </blockquote>
@@ -225,7 +225,7 @@
 <blockquote>
 <p>参考博客<a href="https://blog.csdn.net/z_ipython/article/details/92798640" target="_blank" rel="noopener">Python中type()详解:动态创建类</a></p>
 </blockquote>
-<p>对于Python解释器而言，使用class定义Animal类时，相当于创建了class_object对象，然后将其赋值给<code>Animal</code>变量。</p>
+<p>  对于Python解释器而言，使用class定义Animal类时，相当于创建了class_object对象，然后将其赋值给<code>Animal</code>变量。</p>
 <pre class="highlight"><code class="python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span><span class="hljs-params">(object)</span>:</span>
     name = <span class="hljs-string">"a"</span>
 
@@ -233,7 +233,7 @@
 class_object = type(<span class="hljs-string">"Animal"</span>, (object,), dict(name=<span class="hljs-string">"a"</span>))
 Animal = class_object
 </code></pre>
-<p>默认的class就是通过<code>type</code>生成的，当然仅仅使用<code>type</code>来生成一个class，实在是太麻烦了，所以有了下面的元类编程。</p>
+<p>  默认的class就是通过<code>type</code>生成的，当然仅仅使用<code>type</code>来生成一个class，实在是太麻烦了，所以有了下面的元类编程。</p>
 <h2 id="元类编程"><a class="markdownIt-Anchor" href="#元类编程"></a> 元类编程</h2>
 <blockquote>
 <p>借鉴博客<a href="https://www.cnblogs.com/tkqasn/p/6524879.html" target="_blank" rel="noopener">深刻理解Python中的元类</a>中的描述metaclass的使用过程：</p>
@@ -249,13 +249,13 @@ MyObject = MyClass()     <span class="hljs-comment"># 通过类创建实例</spa
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span><span class="hljs-params">(object, metaclass = MetaClass<span class="hljs-params">()</span>)</span>:</span>
     <span class="hljs-keyword">pass</span>
 </code></pre>
-<p><code>MetaClass</code>如何创建出<code>MyClass</code>呢？肯定还是通过<code>type</code>来创造，但是细节封装在了<code>MetaClass</code>中。<code>MyClass</code>本身也是类，也可以创建出自己的实例，这里就是<code>MyObject</code>。</p>
-<p>可见，<strong>所有对象归根到底还是<code>type</code> 实例化出来的</strong>。通过metaclass可以方便的动态生成一个class。不过实际中，几乎用不到元类编程。</p>
+<p>  <code>MetaClass</code>如何创建出<code>MyClass</code>呢？肯定还是通过<code>type</code>来创造，但是细节封装在了<code>MetaClass</code>中。<code>MyClass</code>本身也是类，也可以创建出自己的实例，这里就是<code>MyObject</code>。</p>
+<p>  可见，<strong>所有对象归根到底还是<code>type</code> 实例化出来的</strong>。通过metaclass可以方便的动态生成一个class。不过实际中，几乎用不到元类编程。</p>
 <h2 id="orm实例"><a class="markdownIt-Anchor" href="#orm实例"></a> ORM实例</h2>
+<p>  廖雪峰教程中使用ORM作为例子因为orm中，表对应的class需要根据schema信息动态生成。</p>
 <pre class="highlight"><code class="python">
 <span class="hljs-string">"""
-metaclass编程，动态定义类。廖雪峰教程中使用ORM作为例子
-因为orm中，表对应的class需要根据schema信息动态生成。
+metaclass编程，动态定义类。
 """</span>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Field</span><span class="hljs-params">(object)</span>:</span>
     <span class="hljs-string">"""
@@ -340,6 +340,33 @@ u.save()
             <hr>
           </div>
           <br>
+
+          
+            <div id="wechat_subscriber" style="display: block; margin: 10px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width: 200px; max-width: 100%;">
+</div>
+
+          
+          
+            <div id="reward-container">
+    <div></div>
+    <button id="reward-button" disable="enable"
+            onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+        打赏
+    </button>
+    <div id="qr" style="display: none;">
+        
+            <div style="display: inline-block">
+                
+                <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width: 200px; max-width: 100%;">
+            </div>
+        
+
+    </div>
+</div>
+
+          
+
           <div>
             <p>
             
@@ -587,18 +614,32 @@ u.save()
 
   <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
   <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
+    // $("#post img:not(.no-zoom img, img[no-zoom])").each(
+    //   function () {
+    //     var element = document.createElement("a");
+    //     $(element).attr("data-fancybox", "images");
+    //     $(element).attr("href", $(this).attr("src"));
+    //     $(this).wrap(element);
+    //
+    //     var imageTitle = $(this).attr('alt');
+    //     if (imageTitle){
+    //       $(element).appendChild(`<p class="image-caption">${imageTitle}</p>`);
+    //     }
+    //   }
+    // );
 
-        var imageTitle = $(this).attr('alt');
-        if (imageTitle){
-          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
-        }
-      }
+    // read alt tag and then make a title
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+            function () {
+              var imageTitle = $(this).attr('alt');
+              if (imageTitle){
+                    $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+                  }
+              var href = $(this).attr("src");
+              console.info(href);
+              var $link = $(this).wrap(`<a data-fancybox="images"></a>`).parent('a');
+              $link.attr('href', href)
+            }
     );
   </script>
 

@@ -413,6 +413,33 @@ print(output)
             <hr>
           </div>
           <br>
+
+          
+            <div id="wechat_subscriber" style="display: block; margin: 10px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/subscribe_img.jpg" alt="微信扫描二维码，关注我的公众号" style="width: 200px; max-width: 100%;">
+</div>
+
+          
+          
+            <div id="reward-container">
+    <div></div>
+    <button id="reward-button" disable="enable"
+            onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+        打赏
+    </button>
+    <div id="qr" style="display: none;">
+        
+            <div style="display: inline-block">
+                
+                <img src="/img/wechatpay.jpg" alt="打赏雅俊 Yajun" style="width: 200px; max-width: 100%;">
+            </div>
+        
+
+    </div>
+</div>
+
+          
+
           <div>
             <p>
             
@@ -660,18 +687,32 @@ print(output)
 
   <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
   <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
+    // $("#post img:not(.no-zoom img, img[no-zoom])").each(
+    //   function () {
+    //     var element = document.createElement("a");
+    //     $(element).attr("data-fancybox", "images");
+    //     $(element).attr("href", $(this).attr("src"));
+    //     $(this).wrap(element);
+    //
+    //     var imageTitle = $(this).attr('alt');
+    //     if (imageTitle){
+    //       $(element).appendChild(`<p class="image-caption">${imageTitle}</p>`);
+    //     }
+    //   }
+    // );
 
-        var imageTitle = $(this).attr('alt');
-        if (imageTitle){
-          $(this).after(`<p class="image-caption">${imageTitle}</p>`);
-        }
-      }
+    // read alt tag and then make a title
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+            function () {
+              var imageTitle = $(this).attr('alt');
+              if (imageTitle){
+                    $(this).after(`<p class="image-caption">${imageTitle}</p>`);
+                  }
+              var href = $(this).attr("src");
+              console.info(href);
+              var $link = $(this).wrap(`<a data-fancybox="images"></a>`).parent('a');
+              $link.attr('href', href)
+            }
     );
   </script>
 
