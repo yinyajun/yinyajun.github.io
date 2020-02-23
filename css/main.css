@@ -773,3 +773,7 @@ s {
   max-width: 30em;
   margin: auto;
 }
+#navbarSupportedContent {
+  overflow-y: hidden;
+  max-height: 550px;
+}
