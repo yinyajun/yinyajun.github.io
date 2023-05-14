@@ -1348,7 +1348,7 @@ enableLunrSearch = false
 enableAlgoliaSearch = true
 
 algoliaAppId = "GG26WUASKT"
-algoliaApiKey = "81e059b1433391253728709fe6ee1ab3"
+algoliaApiKey = "ae2550ecdd180ade3004d4527f25ee13"
 algoliaIndexName = "blog"
 # 说明：https://www.algolia.com/
 
