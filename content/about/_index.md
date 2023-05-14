@@ -5,7 +5,7 @@ date: 2023-05-14T15:51:00+08:00
 
 
 <p style="text-align:center" class="motto">
-<em>凡是过往<br>皆为序章</em>
+<em>纵有疾风起<br>人生不言弃</em>
 </p>
 
 ---
