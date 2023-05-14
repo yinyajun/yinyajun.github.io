@@ -148,7 +148,7 @@ notAlternative = true
 [outputs]
     page = ["HTML"]
     # home = ["HTML", "SectionsAtom", "SectionsRSS", "SearchIndex", "Algolia"]
-    home = ["HTML", "SectionsAtom", "SectionsRSS", "Algolia"]
+    home = ["HTML", "SectionsAtom", "SectionsRSS"]
     section = ["HTML"]
     taxonomy = ["HTML"]
     term = ["HTML"]
@@ -1345,7 +1345,7 @@ enableLunrSearch = false
 #      次将生成的 algolia.json 文件上传到
 #      Algolia
 
-enableAlgoliaSearch = true
+enableAlgoliaSearch = false
 
 algoliaAppId = "GG26WUASKT"
 algoliaApiKey = "ae2550ecdd180ade3004d4527f25ee13"
