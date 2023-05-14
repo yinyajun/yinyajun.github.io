@@ -184,8 +184,8 @@ notAlternative = true
 [menu]
 ## 菜单栏
 [[menu.main]]
-pageref = "/posts/"
-name = "文章"
+pageref = "/archives/"
+name = "归档"
 weight = 1
 pre = "internal"
 #post = "archive"
@@ -735,7 +735,7 @@ enablePostMetaInHome = true
 #      首页布局有效
 
 # 日期格式
-postMetaDateFormat = "2006.1.2"
+postMetaDateFormat = "2006/1/2"
 # 注意：请遵循格式 https://gohugo.io/functions/format/
 
 # 是否显示发布时间
@@ -761,7 +761,7 @@ categoryIcon = "folder"
 categoryDelimiter = "/"
 
 # 是否显示字数统计
-displayWordCount = true
+displayWordCount = false
 # 字数统计的图标
 wordCountIcon = "pencil-alt"
 
