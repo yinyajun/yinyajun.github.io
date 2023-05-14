@@ -1,11 +1,9 @@
 ---
 title: 爱琴文明-从克里特到迈锡尼
-categories: [历史]
-copyright: true
 tags: [古希腊]
-comments: true
 date: 2019-07-03 21:57:10
 description: 希腊文明孕育了西方文明，而爱琴文明孕育了希腊文明。
+summary: 希腊文明孕育了西方文明，而爱琴文明孕育了希腊文明。
 ---
 
 

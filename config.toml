@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://yinyajun.github.io"
-title = "Yajun's Notes"
+title = "夜的序章"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 
@@ -26,13 +26,13 @@ enableEmoji = false
 footnoteReturnLinkContents = "↩"
 
 # 是否启用 Git 版本信息
-enableGitInfo = false
+enableGitInfo = true
 
 # 是否生成 robots.txt 文件
-enableRobotsTXT = true
+enableRobotsTXT = false
 
 # 每一分页的文章数（仅对「文章摘要」首页布局有效）
-paginate = 5
+paginate = 10
 
 # URL 相关
 disablePathToLower = false
@@ -46,7 +46,7 @@ tags = "/tags/:slug/"
 
 # 类别
 [taxonomies]
-category = "categories"
+#category = "categories"
 tag = "tags"
 
 # 修改时间
@@ -95,28 +95,28 @@ name = "殷雅俊"
 # 邮箱
 email = "skyblueice234@gmail.com"
 # 座右铭或简介
-motto = "Le vent se lève, il faut tenter de vivre"
+motto = "凡是过往，结尾序章"
 # 头像
 avatar = "/icons/apple-touch-icon.png"
 # 网站（默认值：baseURL）
-website = "https://io-oi.me/"
+website = "https://yinyajun.github.io/"
 
 
 # 相关文章
 [related]
-threshold = 80
-includeNewer = true
-toLower = true
-[[related.indices]]
-name = "categories"
-weight = 100
-[[related.indices]]
-name = "tags"
-weight = 95
-[[related.indices]]
-name = "date"
-weight = 10
-pattern = "2006"
+    threshold = 80
+    includeNewer = true
+    toLower = true
+#    [[related.indices]]
+#    name = "categories"
+#    weight = 100
+    [[related.indices]]
+    name = "tags"
+    weight = 95
+    [[related.indices]]
+    name = "date"
+    weight = 10
+    pattern = "2006"
 
 # Atom 文件格式的媒体类型
 [mediaTypes."application/atom+xml"]
@@ -146,16 +146,16 @@ notAlternative = true
 
 # Hugo 的输出控制
 [outputs]
-page = ["HTML"]
-# home = ["HTML", "SectionsAtom", "SectionsRSS", "SearchIndex", "Algolia"]
-home = ["HTML", "SectionsAtom", "SectionsRSS"]
-section = ["HTML"]
-taxonomy = ["HTML"]
-term = ["HTML"]
+    page = ["HTML"]
+    # home = ["HTML", "SectionsAtom", "SectionsRSS", "SearchIndex", "Algolia"]
+    home = ["HTML", "SectionsAtom", "SectionsRSS"]
+    section = ["HTML"]
+    taxonomy = ["HTML"]
+    term = ["HTML"]
 
 # RSS & Atom 文章数限制
 [services.rss]
-limit = -1
+    limit = 10
 
 
 
@@ -183,44 +183,32 @@ limit = -1
 
 [menu]
 ## 菜单栏
-# [[menu.main]]
-#     pageref = "/"
-#     name = "首页"
-#     weight = 1
-#     pre = "internal"
-#     post = "home"
 [[menu.main]]
 pageref = "/posts/"
 name = "文章"
-weight = 2
+weight = 1
 pre = "internal"
 #post = "archive"
 [[menu.main]]
-pageref = "/categories/"
-name = "分类"
-weight = 3
-pre = "internal"
-#post = "th"
-[[menu.main]]
 pageref = "/tags/"
 name = "标签"
-weight = 4
+weight = 2
 pre = "internal"
 #post = "tags"
 [[menu.main]]
 pageref = "/about/"
 name = "关于"
-weight = 5
+weight = 3
 pre = "internal"
 #post = "user"
 [[menu.main]]
-weight = 6
+weight = 4
 identifier = "theme-switcher"
 [[menu.main]]
-weight = 7
+weight = 5
 identifier = "lang-switcher"
 [[menu.main]]
-weight = 8
+weight = 6
 identifier = "search"
 post = "search"
 
@@ -253,9 +241,9 @@ headerLayout = "flex"
 # 说明：居中布局（center）或弹性布局（flex）
 
 # 在窄视图下隐藏菜单栏并显示一个按钮？
-enableNavToggle = true
+enableNavToggle = false
 
-navHeight = "10em"
+navHeight = "9em"
 # 说明：菜单栏展开时的高度
 
 
@@ -280,11 +268,11 @@ siteBrandFontColor = "var(--color-contrast-high)"
 # 菜单栏
 
 # 是否开启
-enableMenu = true
+enableMenu = false
 # 说明：对弹性布局的顶栏无效
 
 # 是否在首页显示
-displayMenuInHome = true
+displayMenuInHome = false
 # 说明：对弹性布局的顶栏无效
 
 # 是否按文章分区高亮当前菜单项
@@ -305,23 +293,6 @@ activeInSection = false
 
 homeLayout = "posts"
 
-## 「诗意人生」
-# 诗句，支持 Markdown
-homePoetry = []
-# 底部链接的内间距，单位：em
-homeLinksPadding = 1
-
-## 「视频片段」
-homePoster = ""
-homeVideoWebm = ""
-homeVideoMp4 = ""
-homeLogo = ""
-homeLogoLink = ""
-homeTitle = ""
-homeMotto = ""
-homeDescription = ""
-homeKeywords = ""
-homeLinksDelimiter = ""
 
 ## 「文章摘要」
 enableHideInHomepage = false
@@ -337,12 +308,12 @@ siteLogo = "/icons/apple-touch-icon.png"
 # 说明：用于 JSON-LD、Open Graph
 
 # 站点的描述
-siteDescription = "雅俊的笔记"
+siteDescription = "殷雅俊的笔记，记录生活、学习和工作"
 # 说明：用于 HTML 的头部元数据、JSON-LD、
 #      Open Graph、Atom、RSS
 
 # 站点的创建时间
-siteCreatedTime = "2019-05-14T16:50:43+00:00"
+siteCreatedTime = "2023-05-14T16:50:43+00:00"
 # 注意：请保持此格式，更改数字
 
 
@@ -364,7 +335,7 @@ siteCreatedTime = "2019-05-14T16:50:43+00:00"
 # 的树状分类，故如需保留树状分类，建议适应
 # Hugo 的设计理念——分区。
 
-categoryBy = "categories"
+categoryBy = "sections"
 # 注意：如果你设置为 `sections`，请务必将
 #      此配置文件中的类别（taxonomies）中
 #      的 `categories` 删除，不然分类页
@@ -549,7 +520,7 @@ autoDetectImages = true
 
 # 说明：仅在生产环境（production）下渲染
 
-enableServiceWorker = false
+enableServiceWorker = true
 
 
 ######################################
@@ -754,7 +725,7 @@ displayPostDescription = true
 # 文章元信息
 
 # 是否开启（全局设置）
-enablePostMeta = true
+enablePostMeta = false
 # 说明：文章的 Front Matter 中的 `meta`
 #      的优先级高于此处
 
@@ -1045,15 +1016,6 @@ enableSmallCaps = false
 #      的优先级高于此处
 
 ######################################
-## 着重号
-
-# 说明：MemE 主题自创的新 Markdown 语法
-#      `..文本..`
-
-# 是否开启
-enableEmphasisPoint = true
-
-######################################
 ## 中文标点符号字形纠正
 
 # 是否开启
@@ -1067,7 +1029,7 @@ enableChinesePunctuationGlyphCorrection = true
 enablePostCopyright = true
 
 # 是否显示（全局设置）
-displayPostCopyright = true
+displayPostCopyright = false
 # 说明：文章的 Front Matter 中的 `displayCopyright`
 #      的优先级高于此处
 
@@ -1076,10 +1038,10 @@ displayPostCopyright = true
 # 文章更新徽章
 
 # 是否开启
-enablePostUpdatedBadge = false
+enablePostUpdatedBadge = true
 
 # 是否显示（全局设置）
-displayUpdatedBadge = true
+displayUpdatedBadge = false
 # 说明：文章的 Front Matter 中的 `badge`
 #      的优先级高于此处
 
@@ -1093,17 +1055,17 @@ badgeTitlePrefix = "Updated @ "
 # 文章的 Git 版本信息
 
 # 是否开启
-enablePostGitInfo = false
+enablePostGitInfo = true
 
 # 是否显示（全局设置）
-displayPostGitInfo = false
+displayPostGitInfo = true
 # 说明：文章的 Front Matter 中的 `gitinfo`
 #      的优先级高于此处
 
 # 仓库地址
-repoURL = ""
+repoURL = "https://github.com/yinyajun/yinyajun.github.io"
 # 编辑地址
-repoEditURL = ""
+repoEditURL = "https://github.com/yinyajun/yinyajun.github.io/tree/main"
 
 # Git 的图标
 gitIcon = "code-branch"
@@ -1111,7 +1073,7 @@ gitIcon = "code-branch"
 displayCommitHash = true
 
 # 是否显示改动信息
-displayCommitMessage = true
+displayCommitMessage = false
 # 改动信息的图标
 msgIcon = "info"
 
@@ -1120,14 +1082,14 @@ displayFeedback = true
 # 反馈链接的图标
 feedbackIcon = "question"
 # 反馈链接的文本
-feedbackText = "Feedback"
+feedbackText = "反馈"
 
 # 是否显示编辑链接
 displayEditLink = true
 # 编辑链接的图标
 editIcon = "edit"
 # 编辑链接的文本
-editText = "Edit Me?"
+editText = "编辑"
 
 
 ######################################
@@ -1143,10 +1105,10 @@ displayPostShare = true
 
 displayShareOnText = false
 
-shareOnTwitter = true
-shareOnFacebook = true
-shareOnLinkedIn = true
-shareOnTelegram = true
+#shareOnTwitter = true
+#shareOnFacebook = true
+#shareOnLinkedIn = true
+#shareOnTelegram = true
 shareOnWeibo = true
 shareOnDouban = true
 shareOnQQ = true
@@ -1167,17 +1129,17 @@ displayRelatedPosts = true
 #      的优先级高于此处
 
 # 相关文章数
-relatedPostsNumber = 5
+relatedPostsNumber = 4
 
 # 相关文章标题右边的图标
-relatedPostsIcon = "plus-circle"
+relatedPostsIcon = ""
 
 
 ######################################
 # 文章的标签
 
 # 是否开启
-enablePostTags = true
+enablePostTags = false
 
 # 标签的图标
 postTagsIcon = "tag"
@@ -1194,7 +1156,7 @@ postTagsIcon = "tag"
 #      的是一篇更旧的文章。
 
 # 是否开启
-enablePostNav = true
+enablePostNav = false
 
 # 是否仅限于相同的文章分区
 postNavInSection = true
@@ -1204,14 +1166,14 @@ postNavInSection = true
 # 极简页脚
 
 # 是否开启
-enableMinimalFooter = false
+enableMinimalFooter = true
 enableVerticalBarStructure = false
 # 说明：如果开启此项，显示在右边的部类或分区
 #      将会包含全部的第一级部类或分区，并且
 #      以竖线（|）分隔开来。
 
 # 是否开启关于页面的极简页脚
-enableAboutPageMinimalFooter = false
+enableAboutPageMinimalFooter = true
 
 
 ######################################
@@ -1240,7 +1202,7 @@ backToTopIcon = "arrow-up"
 enableFooter = true
 
 # 是否显示
-displayFooter = true
+displayFooter = false
 
 # 是否在首页显示
 displayFooterInHome = true
@@ -1250,7 +1212,7 @@ displayCopyleftSymbol = false
 displayCopyrightSymbol = true
 
 # 是否显示站点的创建年份
-displaySiteCreatedYear = true
+displaySiteCreatedYear = false
 
 # 年份与作者之间的图标，留空（""）则无
 iconBetweenYearAndAuthor = " "
@@ -1260,15 +1222,15 @@ iconColor = "#f06292"
 iconAnimation = false
 
 # 是否显示 Hugo 和 MemE 的链接
-displayPoweredBy = true
+displayPoweredBy = false
 
 # 是否显示站点的版权信息
 displaySiteCopyright = true
 
 # 自定义页脚（支持 Markdown）
-customFooter = ""
+customFooter = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)"
 
-displayBusuanziSiteUVAndPV = false
+displayBusuanziSiteUVAndPV = true
 busuanziSiteUVText = "本站访客数"
 busuanziSiteUVIcon = "user"
 busuanziSitePVText = "本站访问量"
@@ -1321,7 +1283,7 @@ enableCopyAutoHide = true
 # 说明：仅对 MemE 生成的 CSS 和 JS 有效
 
 # 是否开启文件指纹
-enableFingerprint = true
+enableFingerprint = false
 
 # 是否开启子资源完整性验证
 enableSRI = false
@@ -1350,7 +1312,7 @@ enableForceHTTPS = false
 # 平滑滚动
 
 # 是否开启
-enableSmoothScroll = true
+enableSmoothScroll = false
 
 
 ######################################
