@@ -744,12 +744,12 @@ displayPublishedDate = true
 publishedDateIcon = "calendar-alt"
 
 # 是否显示修改时间
-displayModifiedDate = true
+displayModifiedDate = false
 # 修改时间的图标
 modifiedDateIcon = "calendar-check"
 
 # 是否显示过期时间
-displayExpiredDate = true
+displayExpiredDate = false
 # 过期时间的图标
 expiredDateIcon = "calendar-times"
 
@@ -766,7 +766,7 @@ displayWordCount = true
 wordCountIcon = "pencil-alt"
 
 # 是否显示阅读时长
-displayReadingTime = true
+displayReadingTime = false
 # 阅读时长的图标
 readingTimeIcon = "clock"
 
@@ -1228,12 +1228,12 @@ displayPoweredBy = false
 displaySiteCopyright = true
 
 # 自定义页脚（支持 Markdown）
-customFooter = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)"
+customFooter = ""
 
 displayBusuanziSiteUVAndPV = true
-busuanziSiteUVText = "本站访客数"
+busuanziSiteUVText = ""
 busuanziSiteUVIcon = "user"
-busuanziSitePVText = "本站访问量"
+busuanziSitePVText = ""
 busuanziSitePVIcon = "eye"
 # 说明：仅在生产环境（production）下渲染
 #      文本或图标，留空（""）则无

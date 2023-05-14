@@ -7,9 +7,9 @@
 
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Yajun&#39;s Notes</title>
+        <title>夜的序章</title>
         <link>https://yinyajun.github.io/</link>
-        <description>雅俊的笔记</description>
+        <description>殷雅俊的笔记，记录生活、学习和工作</description>
         <generator>Hugo 0.111.2 https://gohugo.io/</generator>
         
             <language>zh-CN</language>
@@ -21,15 +21,15 @@
             <webMaster>skyblueice234@gmail.com (殷雅俊)</webMaster>
         
         
-        <lastBuildDate>Sun, 14 May 2023 18:31:10 &#43;0800</lastBuildDate>
+        <lastBuildDate>Sun, 14 May 2023 20:59:54 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://yinyajun.github.io/rss.xml" />
         
         
             <item>
                 <title>源远流长的希腊神话传说</title>
-                <link>https://yinyajun.github.io/posts/history/greek02/</link>
-                <guid isPermaLink="true">https://yinyajun.github.io/posts/history/greek02/</guid>
+                <link>https://yinyajun.github.io/history/greek02/</link>
+                <guid isPermaLink="true">https://yinyajun.github.io/history/greek02/</guid>
                 <pubDate>Thu, 04 Jul 2019 21:57:10 &#43;0000</pubDate>
                 
                     <author>skyblueice234@gmail.com (殷雅俊)</author>
@@ -162,18 +162,20 @@ Hercules and his gifts&lt;/p&gt;
                 
                 
                 
-                
-                
+                    
+                    
                     
                         
+                        
+                        
                             
-                                
-                                
-                                
-                                    <category domain="https://yinyajun.github.io/categories/%E5%8E%86%E5%8F%B2/">历史</category>
-                                
+                                <category domain="https://yinyajun.github.io/history/">history</category>
                             
                         
+                    
+                
+                
+                
                     
                         
                             
@@ -190,8 +192,8 @@ Hercules and his gifts&lt;/p&gt;
         
             <item>
                 <title>爱琴文明-从克里特到迈锡尼</title>
-                <link>https://yinyajun.github.io/posts/history/greek01/</link>
-                <guid isPermaLink="true">https://yinyajun.github.io/posts/history/greek01/</guid>
+                <link>https://yinyajun.github.io/history/greek01/</link>
+                <guid isPermaLink="true">https://yinyajun.github.io/history/greek01/</guid>
                 <pubDate>Wed, 03 Jul 2019 21:57:10 &#43;0000</pubDate>
                 
                     <author>skyblueice234@gmail.com (殷雅俊)</author>
@@ -299,18 +301,20 @@ Hercules and his gifts&lt;/p&gt;
                 
                 
                 
-                
-                
+                    
+                    
                     
                         
+                        
+                        
                             
-                                
-                                
-                                
-                                    <category domain="https://yinyajun.github.io/categories/%E5%8E%86%E5%8F%B2/">历史</category>
-                                
+                                <category domain="https://yinyajun.github.io/history/">history</category>
                             
                         
+                    
+                
+                
+                
                     
                         
                             
