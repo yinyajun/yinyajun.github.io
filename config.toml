@@ -91,7 +91,7 @@ keepWhitespace = false
 # 作者信息
 [author]
 # 名字
-name = "殷雅俊"
+name = "雅俊"
 # 邮箱
 email = "skyblueice234@gmail.com"
 # 座右铭或简介
@@ -148,7 +148,7 @@ notAlternative = true
 [outputs]
     page = ["HTML"]
     # home = ["HTML", "SectionsAtom", "SectionsRSS", "SearchIndex", "Algolia"]
-    home = ["HTML", "SectionsAtom", "SectionsRSS"]
+    home = ["HTML", "SectionsAtom", "SectionsRSS", "Algolia"]
     section = ["HTML"]
     taxonomy = ["HTML"]
     term = ["HTML"]
@@ -1345,11 +1345,11 @@ enableLunrSearch = false
 #      次将生成的 algolia.json 文件上传到
 #      Algolia
 
-enableAlgoliaSearch = false
+enableAlgoliaSearch = true
 
-algoliaAppId = ""
-algoliaApiKey = ""
-algoliaIndexName = ""
+algoliaAppId = "GG26WUASKT"
+algoliaApiKey = "9c5aef63184ac2e63339f8b5b76f53d5"
+algoliaIndexName = "blog"
 # 说明：https://www.algolia.com/
 
 

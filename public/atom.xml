@@ -4,12 +4,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">夜的序章</title>
     <subtitle type="html">殷雅俊的笔记，记录生活、学习和工作</subtitle>
-    <updated>2023-05-14T21:22:21&#43;08:00</updated>
+    <updated>2023-05-14T22:20:51&#43;08:00</updated>
     <id>https://yinyajun.github.io/</id>
     <link rel="alternate" type="text/html" href="https://yinyajun.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://yinyajun.github.io/atom.xml" />
     <author>
-            <name>殷雅俊</name>
+            <name>雅俊</name>
             <uri>https://yinyajun.github.io</uri>
             
                 <email>skyblueice234@gmail.com</email>
@@ -23,7 +23,7 @@
             <updated>2023-05-14T20:55:10&#43;08:00</updated>
             <published>2019-07-04T21:57:10&#43;00:00</published>
             <author>
-                    <name>殷雅俊</name>
+                    <name>雅俊</name>
                     <uri>https://yinyajun.github.io/</uri>
                     <email>skyblueice234@gmail.com</email>
                     </author>
@@ -190,7 +190,7 @@ Hercules and his gifts&lt;/p&gt;
             <updated>2023-05-14T20:55:10&#43;08:00</updated>
             <published>2019-07-03T21:57:10&#43;00:00</published>
             <author>
-                    <name>殷雅俊</name>
+                    <name>雅俊</name>
                     <uri>https://yinyajun.github.io/</uri>
                     <email>skyblueice234@gmail.com</email>
                     </author>
