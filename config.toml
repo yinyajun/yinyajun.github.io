@@ -41,7 +41,7 @@ uglyURLs = false
 
 # URL 结构
 [permalinks]
-categories = "/categories/:slug/"
+#categories = "/categories/:slug/"
 tags = "/tags/:slug/"
 
 # 类别
@@ -91,7 +91,7 @@ keepWhitespace = false
 # 作者信息
 [author]
 # 名字
-name = "雅俊"
+name = "Yajun"
 # 邮箱
 email = "skyblueice234@gmail.com"
 # 座右铭或简介
@@ -308,7 +308,7 @@ siteLogo = "/icons/apple-touch-icon.png"
 # 说明：用于 JSON-LD、Open Graph
 
 # 站点的描述
-siteDescription = "殷雅俊的笔记，记录生活、学习和工作"
+siteDescription = "雅俊的笔记，记录生活、学习和工作"
 # 说明：用于 HTML 的头部元数据、JSON-LD、
 #      Open Graph、Atom、RSS
 
@@ -1345,10 +1345,10 @@ enableLunrSearch = false
 #      次将生成的 algolia.json 文件上传到
 #      Algolia
 
-enableAlgoliaSearch = false
+enableAlgoliaSearch = true
 
 algoliaAppId = "GG26WUASKT"
-algoliaApiKey = "ae2550ecdd180ade3004d4527f25ee13"
+algoliaApiKey = "b57194a23263514bb9a2cdcf8c689d1e"
 algoliaIndexName = "blog"
 # 说明：https://www.algolia.com/
 
