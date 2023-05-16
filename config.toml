@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://yinyajun.github.io"
-title = "yajun的小本子"
+title = "Misty"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 
