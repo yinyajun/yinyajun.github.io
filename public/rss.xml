@@ -7,7 +7,7 @@
 
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>夜的序章</title>
+        <title>Misty</title>
         <link>https://yinyajun.github.io/</link>
         <description>雅俊的笔记，记录生活、学习和工作</description>
         <generator>Hugo 0.111.2 https://gohugo.io/</generator>
@@ -21,7 +21,7 @@
             <webMaster>skyblueice234@gmail.com (Yajun)</webMaster>
         
         
-        <lastBuildDate>Wed, 17 May 2023 00:44:39 &#43;0800</lastBuildDate>
+        <lastBuildDate>Wed, 17 May 2023 11:55:23 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://yinyajun.github.io/rss.xml" />
         
