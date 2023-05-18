@@ -1,5 +1,6 @@
 ---
 title: 源远流长的希腊神话传说
+categories: [History]
 tags: [古希腊]
 date: 2019-07-04 21:57:10
 description: Mooc上武汉大学哲赵林老师主讲的《西方文化概论》之古希腊文化部分的13讲课程。本篇对应于3-5讲。

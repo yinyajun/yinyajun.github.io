@@ -17,7 +17,7 @@ defaultContentLanguageInSubdir = false
 pluralizeListTitles = false
 
 # 摘要的字数限制
-summaryLength = 42
+summaryLength = 60
 
 # 是否开启 GitHub 风格的 Emoji 书写方式
 enableEmoji = false
@@ -46,7 +46,7 @@ tags = "/tags/:slug/"
 
 # 类别
 [taxonomies]
-#category = "categories"
+category = "categories"
 tag = "tags"
 
 # 修改时间
@@ -107,12 +107,12 @@ website = "https://yinyajun.github.io/"
     threshold = 80
     includeNewer = true
     toLower = true
-#    [[related.indices]]
-#    name = "categories"
-#    weight = 100
+    [[related.indices]]
+    name = "categories"
+    weight = 50
     [[related.indices]]
     name = "tags"
-    weight = 95
+    weight = 100
     [[related.indices]]
     name = "date"
     weight = 10
@@ -186,6 +186,12 @@ notAlternative = true
 [[menu.main]]
 pageref = "/archives/"
 name = "归档"
+weight = 1
+pre = "internal"
+#post = "archive"
+[[menu.main]]
+pageref = "/categories/"
+name = "分类"
 weight = 1
 pre = "internal"
 #post = "archive"
@@ -335,7 +341,7 @@ siteCreatedTime = "2023-05-14T16:50:43+00:00"
 # 的树状分类，故如需保留树状分类，建议适应
 # Hugo 的设计理念——分区。
 
-categoryBy = "sections"
+categoryBy = "categories"
 # 注意：如果你设置为 `sections`，请务必将
 #      此配置文件中的类别（taxonomies）中
 #      的 `categories` 删除，不然分类页
@@ -348,7 +354,7 @@ categoryBy = "sections"
 # 分类页面
 
 # 是否开启树状布局
-enableTree = true
+enableTree = false
 # 注意：如果你设置 categoryBy 为
 # `sections`，则无法关闭树状布局
 
@@ -725,7 +731,7 @@ displayPostDescription = true
 # 文章元信息
 
 # 是否开启（全局设置）
-enablePostMeta = false
+enablePostMeta = true
 # 说明：文章的 Front Matter 中的 `meta`
 #      的优先级高于此处
 
@@ -744,7 +750,7 @@ displayPublishedDate = true
 publishedDateIcon = "calendar-alt"
 
 # 是否显示修改时间
-displayModifiedDate = true
+displayModifiedDate = false
 # 修改时间的图标
 modifiedDateIcon = "calendar-check"
 
@@ -1026,10 +1032,10 @@ enableChinesePunctuationGlyphCorrection = true
 # 文章版权
 
 # 是否开启
-enablePostCopyright = true
+enablePostCopyright = false
 
 # 是否显示（全局设置）
-displayPostCopyright = false
+displayPostCopyright = true
 # 说明：文章的 Front Matter 中的 `displayCopyright`
 #      的优先级高于此处
 
@@ -1038,7 +1044,7 @@ displayPostCopyright = false
 # 文章更新徽章
 
 # 是否开启
-enablePostUpdatedBadge = true
+enablePostUpdatedBadge = false
 
 # 是否显示（全局设置）
 displayUpdatedBadge = false
