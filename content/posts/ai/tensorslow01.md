@@ -259,7 +259,7 @@ def traverse_postorder(operation):
 
 #### Example
 
-完成仿射变换例子的输出
+完成仿射变换例子的输出.
 
 $$
 z=\begin{pmatrix}1 & 0 \\\\ 0 & -1 \end{pmatrix} \cdot \begin{pmatrix}1 \\\\ 2\end{pmatrix} + \begin{pmatrix}
