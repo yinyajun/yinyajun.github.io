@@ -91,11 +91,11 @@ keepWhitespace = false
 # 作者信息
 [author]
 # 名字
-name = "Yajun"
+name = "雅俊"
 # 邮箱
 email = "skyblueice234@gmail.com"
 # 座右铭或简介
-motto = "凡是过往，结尾序章"
+motto = "纵有疾风起，人生不言弃"
 # 头像
 avatar = "/icons/apple-touch-icon.png"
 # 网站（默认值：baseURL）
