@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://yinyajun.github.io"
-title = "Misty"
+title = "算迹"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 
@@ -314,12 +314,12 @@ siteLogo = "/icons/apple-touch-icon.png"
 # 说明：用于 JSON-LD、Open Graph
 
 # 站点的描述
-siteDescription = "雅俊的笔记，记录生活、学习和工作"
+siteDescription = "yajun的学习笔记"
 # 说明：用于 HTML 的头部元数据、JSON-LD、
 #      Open Graph、Atom、RSS
 
 # 站点的创建时间
-siteCreatedTime = "2023-05-14T16:50:43+00:00"
+siteCreatedTime = "2019-05-14T16:50:43+00:00"
 # 注意：请保持此格式，更改数字
 
 
@@ -462,7 +462,7 @@ includeContent = true
 enableDarkMode = true
 
 # 默认模式
-defaultTheme = "light"
+defaultTheme = "dark"
 # 说明：light（浅色模式）或 dark（深色模式）
 
 # 是否隐藏模式切换开关
