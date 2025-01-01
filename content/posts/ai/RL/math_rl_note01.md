@@ -129,7 +129,11 @@ $$\mathbb{E}[R_{t+1}| S_t=s] = \Sigma_{a} \pi(a|s) \Sigma _r p(r|s,a)r$$
 
 再看看后者
 
-$$\mathbb{E}[G_{t+1}| S_t = s] \\= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\=  \Sigma_{s'}v_\pi (s') p(s'|s)$$
+$$
+\begin{align}
+\mathbb{E}[G_{t+1}| S_t = s] &= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\ 
+&=  \Sigma_{s'}v_\pi (s') p(s'|s)
+\end{align}$$
 
 这里比较跳的步骤是用了markov的性质。随机由下一时刻的return本身和状态转移的随机引入。
 
