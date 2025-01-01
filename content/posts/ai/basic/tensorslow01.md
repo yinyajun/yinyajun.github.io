@@ -1,7 +1,7 @@
 ---
 title: 有趣的TensorSlow(上)
 copyright: true
-categories: [AI]
+categories: [人工智能]
 tags: [TensorSlow]
 date: 2019-06-01 22:37:36
 katex: true

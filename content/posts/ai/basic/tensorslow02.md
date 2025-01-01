@@ -1,6 +1,6 @@
 ---
 title: 有趣的TensorSlow(下)
-categories: [AI]
+categories: [人工智能]
 tags: [TensorSlow]
 date: 2019-06-02 22:37:36
 displayCopyright: true

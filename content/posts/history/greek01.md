@@ -1,6 +1,6 @@
 ---
 title: 爱琴文明-从克里特到迈锡尼
-categories: [History]
+categories: [历史]
 tags: [古希腊]
 date: 2019-07-03 21:57:10
 description: Mooc上武汉大学哲赵林老师主讲的《西方文化概论》之古希腊文化部分的13讲课程。本篇对应于1-2讲。
