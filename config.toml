@@ -46,8 +46,8 @@ tags = "/tags/:slug/"
 
 # 类别
 [taxonomies]
-category = "分类"
-tag = "标签"
+category = "categories"
+tag = "tags"
 
 # 修改时间
 [frontmatter]
