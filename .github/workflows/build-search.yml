@@ -16,8 +16,14 @@ jobs:
       with:
         go-version: '1.18' # 指定你需要的Go版本
 
+    - name:
+      run: pwd
+
     - name: Install
       run: go install -v github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
+
+    - name: Print GOPATH
+      run: echo $GOPATH
 
     - name: Set BIN_PATH
       run: echo "BIN_PATH=$GOPATH/bin" >> $GITHUB_ENV
