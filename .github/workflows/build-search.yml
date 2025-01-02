@@ -1,0 +1,26 @@
+name: Go CI
+
+on:
+  workflow_dispatch: # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.18' # 指定你需要的Go版本
+
+    - name: Install
+      run: go install -v github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
+
+    - name: Set BIN_PATH
+      run: echo "BIN_PATH=$GOPATH/bin" >> $GITHUB_ENV
+
+    - name: Run myapp
+      run: $BIN_PATH/build_hugo_search
