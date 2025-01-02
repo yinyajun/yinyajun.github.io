@@ -31,6 +31,9 @@ jobs:
     - name: Check if build_hugo_search exists
       run: ls $GOPATH/bin/build_hugo_search
 
+    - name: fsd
+      run: ls /home/runner/go/bin
+
     - name: Set BIN_PATH
       run: echo "BIN_PATH=$GOPATH/bin" >> $GITHUB_ENV
 
