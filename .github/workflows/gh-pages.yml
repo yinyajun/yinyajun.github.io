@@ -21,14 +21,14 @@ jobs:
           hugo-version: 0.135.0
           extended: true
 
-      - name: Build
+      - name: Build Hugo
         run: hugo --minify
 
-      - name: test
-        run: go env
+      - name: Install Search Index Builder
+        run: go install github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
 
-      - name: test2
-        run: go get github.com/yinyajun/hugo_algolia_search
+      - name:
+        run: build_hugo_search
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
