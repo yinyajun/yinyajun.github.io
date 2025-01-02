@@ -24,16 +24,6 @@ jobs:
       - name: Build Hugo
         run: hugo --minify
 
-
-      - name: Install Search Index Builder
-        run: go install github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
-
-      - name:
-        run: ls -l ${GOPATH}/bin
-
-      - name:
-        run: build_hugo_search
-
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
