@@ -118,14 +118,16 @@ $$v_\pi(s) = \mathbb{E}[G_t| S_t=s]$$
 
 
 $$
-\begin{align*}
+\begin{equation}
+\begin{aligned}
 G_t &= R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ...\\ 
 & = R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + ...)\\ 
 & = R_{t+1} + \gamma G_{t+1}
-\end{align*}
+\end{aligned}
+\end{equation}
 $$
 
-含义很自然，这一时刻的return=当前reward+下一时刻的return。
+含义很自然，这一时刻的return = 当前reward + 下一时刻的return。
 
 因此，state value的可以拆为
 $$v_\pi(s)  = \mathbb{E} [R_{t+1} | S_t = s] + \gamma \mathbb{E} [ G_{t+1} | S_t = s]$$
@@ -149,7 +151,7 @@ $$\mathbb{E}[R_{t+1}| S_t=s] = \Sigma_{a} \pi(a|s) \Sigma _r p(r|s,a)r$$
 
 
 $$
-\mathbb{E}[G_{t+1}| S_t = s] \\= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\ =  \Sigma_{s'}v_\pi (s') p(s'|s)
+\begin{equation}\begin{aligned}&\mathbb{E}[G_{t+1}| S_t = s]  \\&= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\ &= \Sigma_{s'}v_\pi (s') p(s'|s)\end{aligned}\end{equation}
 $$
 
 
