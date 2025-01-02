@@ -118,8 +118,8 @@ $$v_\pi(s) = \mathbb{E}[G_t| S_t=s]$$
 
 $$
 \begin{aligned}
-G_t &= R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ...\\ 
-& = R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + ...)\\ 
+G_t &= R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ...\\\\ 
+& = R_{t+1} + \gamma (R_{t+2} + \gamma R_{t+3} + ...)\\\\ 
 & = R_{t+1} + \gamma G_{t+1}
 \end{aligned}
 $$
