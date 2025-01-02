@@ -24,6 +24,12 @@ jobs:
       - name: Build Hugo
         run: hugo --minify
 
+      - name: test
+        run: pwd
+
+      - name: test2
+          run: go env
+
       - name: Install Search Index Builder
         run: go install github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
 
