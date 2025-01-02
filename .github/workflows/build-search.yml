@@ -1,7 +1,7 @@
 name: build search index
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # 手动触发
 
 jobs:
   build:
