@@ -25,6 +25,10 @@ jobs:
     - name: Print GOPATH
       run: echo $GOPATH
 
+
+    - name: Check if build_hugo_search exists
+      run: ls $GOPATH/bin/build_hugo_search
+
     - name: Set BIN_PATH
       run: echo "BIN_PATH=$GOPATH/bin" >> $GITHUB_ENV
 
