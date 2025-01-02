@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://yinyajun.github.io"
-title = "BitTrace"
+title = "BTray"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 
