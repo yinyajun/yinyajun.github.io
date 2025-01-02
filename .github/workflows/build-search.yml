@@ -22,4 +22,5 @@ jobs:
     - name: Run myapp
       run: |
         gopath=`go env GOPATH`
+        ls -l ${gopath}/bin
         ${gopath}/bin/build_hugo_search
