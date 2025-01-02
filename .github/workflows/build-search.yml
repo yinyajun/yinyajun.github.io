@@ -19,8 +19,7 @@ jobs:
     - name: Install
       run: go install -v github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
 
-    - name: Run myapp
+    - name: Build search index
       run: |
         gopath=`go env GOPATH`
-        ls -l ${gopath}/bin
         ${gopath}/bin/build_hugo_search
