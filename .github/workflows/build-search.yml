@@ -14,10 +14,12 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.18'
+        go-version: '1.18' # 指定你需要的Go版本
+
 
     - name: Install
       run: go install -v github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
 
-    - name: Build Search Index
-      run: `go env GOPATH`/build_hugo_search
+
+    - name: Run myapp
+      run: ${`go env GOPATH`}/build_hugo_search
