@@ -22,17 +22,5 @@ jobs:
     - name: Install
       run: go install -v github.com/yinyajun/hugo_algolia_search/build_hugo_search@2dc892ff
 
-    - name: Print GOPATH
-      run: echo $GOPATH
-
-    - name: Go ENV
-      run: go env
-
-    - name: fsd
-      run: ls /home/runner/go/bin
-
-    - name: Set BIN_PATH
-      run: echo "BIN_PATH=$GOPATH/bin" >> $GITHUB_ENV
-
     - name: Run myapp
-      run: $BIN_PATH/build_hugo_search
+      run: `go env GOPATH`/build_hugo_search
