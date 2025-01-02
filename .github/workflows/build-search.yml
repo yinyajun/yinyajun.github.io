@@ -28,9 +28,6 @@ jobs:
     - name: Go ENV
       run: go env
 
-    - name: Check if build_hugo_search exists
-      run: ls $GOPATH/bin/build_hugo_search
-
     - name: fsd
       run: ls /home/runner/go/bin
 
