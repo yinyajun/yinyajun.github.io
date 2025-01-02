@@ -125,16 +125,7 @@ G_t &= R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ...\\\\
 $$
 
 
-$$
-\begin{aligned}
-\frac{\partial e}{\partial a}
-&= \frac{\partial e}{\partial d} \cdot \frac{\partial d}{\partial a}\\\\
-&= \frac{\partial e}{\partial d} \cdot \left( \frac{\partial d}{\partial b} \cdot \frac{\partial b}{\partial a} + \frac{\partial d}{\partial c} \cdot \frac{\partial c}{\partial a} \right)\\\\
-&= \frac{\partial e}{\partial d} \cdot \frac{\partial d}{\partial b} \cdot \frac{\partial b}{\partial a} + \frac{\partial e}{\partial d} \cdot \frac{\partial d}{\partial c} \cdot \frac{\partial c}{\partial a}
-\end{aligned}
-$$
-
-含义很自然，这一时刻的return = 当前reward + 下一时刻的return。
+含义很自然，这一时刻的return = 当前reward + 下一时刻的return.
 
 因此，state value的可以拆为
 $$v_\pi(s)  = \mathbb{E} [R_{t+1} | S_t = s] + \gamma \mathbb{E} [ G_{t+1} | S_t = s]$$
@@ -155,21 +146,16 @@ $$\mathbb{E}[R_{t+1}| S_t=s] = \Sigma_{a} \pi(a|s) \Sigma _r p(r|s,a)r$$
 
 #### future rewards
 
-
-
 $$
 \begin{aligned}
-&\mathbb{E}[G_{t+1}| S_t = s]  \\
-&= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\ 
+&\mathbb{E}[G_{t+1}| S_t = s]  \\\\
+&= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\\\
 &= \Sigma_{s'}v_\pi (s') p(s'|s)
 \end{aligned}
 $$
 
 
-
-这里比较跳的步骤是用了markov的性质，Return只和当前时刻的State有关，和前一个时刻的State无关。
-
-随机性在于return的随机和状态转移的随机。
+这里比较跳的步骤是用了markov的性质，Return只和当前时刻的State有关，和前一个时刻的State无关。随机性在于return的随机和状态转移的随机。
 
 
 
@@ -182,7 +168,7 @@ $$
 * 前者是实现，用小写字母表示。某个state的return依赖其他state的return。
 * 后者是随机变量，用大写字母表示。某个时刻state的return依赖未来时刻的return。
 * 因为Return是随机变量，当具体采样到某条trajectory时，才是前者。
-* 而我们为了更好的衡量Return，采用期望而不是某一个采样。
+* 而我们为了更好的衡量Return，采用期望而不仅仅是某一个采样。
 
 #### Bellman Equation
 
