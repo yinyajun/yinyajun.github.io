@@ -6,10 +6,9 @@ tags: [西湖大学,赵世钰]
 date: 2023-07-15 15:37:36
 katex: true
 summary: 我的强化学习入门课程就是赵世钰老师的[强化学习](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning)，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。
-
 ---
 
-
+我的强化学习入门课程就是赵世钰老师的[强化学习](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning)，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。
 
 ## 第一章
 
@@ -127,6 +126,41 @@ G_t &= R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ...\\
 \end{equation}
 $$
 
+$$
+\begin{gathered}
+  a_{11} x_{1} + a_{12} x_{2} + a_{13} x_{2} = b_{1} \\
+  a_{21} x_{1} + a_{22} x_{3} + a_{23} x_{3} = b_{2}
+\end{gathered}
+$$
+
+$$
+\[
+|x| = \left\{
+  \begin{array}{rl}
+    -x & \mbox{if } x < 0,\\
+    0 & \mbox{if } x = 0,\\
+    x & \mbox{if } x > 0.
+  \end{array} \right.
+\]
+$$
+
+$$
+\begin{cases}
+  -x & \mbox{if } x < 0,\\
+  0 & \mbox{if } x = 0,\\
+  x & \mbox{if } x > 0.
+\end{cases}
+$$
+
+$$
+\begin{aligned}
+\frac{\partial e}{\partial a}
+&= \frac{\partial e}{\partial d} \cdot \frac{\partial d}{\partial a}\\\\
+&= \frac{\partial e}{\partial d} \cdot \left( \frac{\partial d}{\partial b} \cdot \frac{\partial b}{\partial a} + \frac{\partial d}{\partial c} \cdot \frac{\partial c}{\partial a} \right)\\\\
+&= \frac{\partial e}{\partial d} \cdot \frac{\partial d}{\partial b} \cdot \frac{\partial b}{\partial a} + \frac{\partial e}{\partial d} \cdot \frac{\partial d}{\partial c} \cdot \frac{\partial c}{\partial a}
+\end{aligned}
+$$
+
 含义很自然，这一时刻的return = 当前reward + 下一时刻的return。
 
 因此，state value的可以拆为
@@ -151,7 +185,13 @@ $$\mathbb{E}[R_{t+1}| S_t=s] = \Sigma_{a} \pi(a|s) \Sigma _r p(r|s,a)r$$
 
 
 $$
-\begin{equation}\begin{aligned}&\mathbb{E}[G_{t+1}| S_t = s]  \\&= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\ &= \Sigma_{s'}v_\pi (s') p(s'|s)\end{aligned}\end{equation}
+\begin{equation}
+\begin{aligned}
+&\mathbb{E}[G_{t+1}| S_t = s]  \\
+&= \Sigma_{s'} \mathbb{E}[G_{t+1}| S_{t+1}=s'] p(s'|s) \\ 
+&= \Sigma_{s'}v_\pi (s') p(s'|s)
+\end{aligned}
+\end{equation}
 $$
 
 
