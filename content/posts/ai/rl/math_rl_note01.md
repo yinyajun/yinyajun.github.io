@@ -274,10 +274,9 @@ $$q_\pi(s,a) = \sum_r p(r|s,a) r + \gamma \sum_{s'}p(s'|s,a)\sum_{a'} \pi(a'|s')
 这章围绕optimal state value.
 
 
-
 ### Optimal Policy
 
-相比于其他policy，optimal policy在所有state上的state value都是最大的，称之为$\pi ^*.$ 我们需要探讨这三点
+相比于其他policy，optimal policy在所有state上的state value都是最大的，称之为$\pi ^*.$ 关于optimal policy需要探讨这三点
 
 * Existence
 * Uniqueness
@@ -293,26 +292,29 @@ $$v(s) = \max_{\pi}\sum _ a \pi(a|s) q(s,a)$$
 
 先求optimal policy $\pi^*,$
 
-$$
+$
 \pi^*(a|s) = 
 \begin{cases} 
 1 & \text{if } a = a^* \\\\
 0 & \text{if } a \neq a^*
 \end{cases}
-$$
+$
 
 其中，$a^* = \arg \max_a q(s, a).$ Optimal policy就是找action value最大的动作。
 
-所以，方程的左右边只有$v$，用矩阵形式可写为
+
+
+
+这样，方程的左右边只有$v$，用矩阵形式可写为
 
 $$v = \max_\pi(r_\pi+ \gamma P_\pi v)$$
 
 $\pi$在max的作用下将不在是变量，只有$v$是变量。所以BOE相当于求解$v= f(v)$.
 
-> Contraction mapping theorem
+> **Contraction mapping theorem**
 >
-> 1. 存在不动点$x^*,$ 使得$$f(x^*)=x^*$
-> 2. 只要满足，$|| f(x_1)-f(x_2)||\leq \gamma ||x_1 -x_2||$
+> 1. 存在不动点$x^*,$  使得 $f(x^*)=x^*$
+> 2. 只要满足，$\left \lVert f(x_1)-f(x_2)\right \rVert \leq \gamma \left \lVert x_1 -x_2 \right \rVert$
 >
 > 定理可以保证：
 >
@@ -322,15 +324,13 @@ $\pi$在max的作用下将不在是变量，只有$v$是变量。所以BOE相当
 >
 > 证明思路：构建Cauchy序列
 
-有了Contraction mapping theorem，可证BOE的右侧的函数映射是contraction mapping（看书）
-
-可以不加证明的看，
+有了Contraction mapping theorem，可证BOE的右侧的函数映射是contraction mapping（看书）。可以不加证明的看，
 
 * max去除$\pi$的影响
 * $r_\pi$和$v$无关
 * $P_\pi$是stochastic matrix，作用下不会超过$v$的最大元素
 
-大概可以认为是$||f(v_1)-f(v_2)||_\infty \leq\gamma ||v1-v2||_\infty$. 这样，BOE的右侧函数就是一个Contraction mapping.
+大概可以认为是$\left \lVert f(v_1)-f(v_2)\right \rVert_\infty \leq\gamma \left \lVert v1-v2\right \rVert_\infty$. 这样，BOE的右侧函数就是一个Contraction mapping.
 
 ### Solving BOE
 
