@@ -290,15 +290,15 @@ $$v(s) = \max_{\pi}\sum _ a \pi(a|s) q(s,a)$$
 
 由于$q(s,a)$中包含了$v(s)$，所以右边求最值的式子中有两个未知量$q(s,a)$和$\pi(a|s)$.
 
-先求optimal policy $\pi^*,$
+先求optimal policy $\pi^*$，可得
 
-$
+$$
 \pi^*(a|s) = 
 \begin{cases} 
 1 & \text{if } a = a^* \\\\
 0 & \text{if } a \neq a^*
 \end{cases}
-$
+$$
 
 其中，$a^* = \arg \max_a q(s, a).$ Optimal policy就是找action value最大的动作。
 
@@ -313,7 +313,7 @@ $\pi$在max的作用下将不在是变量，只有$v$是变量。所以BOE相当
 
 > **Contraction mapping theorem**
 >
-> 1. 存在不动点$x^*,$  使得 $f(x^*)=x^*$
+> 1. 存在不动点$x^{*},$  使得 $f(x^{*})=x^{*}$
 > 2. 只要满足，$\left \lVert f(x_1)-f(x_2)\right \rVert \leq \gamma \left \lVert x_1 -x_2 \right \rVert$
 >
 > 定理可以保证：
