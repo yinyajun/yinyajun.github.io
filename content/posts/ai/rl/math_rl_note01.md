@@ -313,7 +313,7 @@ $\pi$在max的作用下将不在是变量，只有$v$是变量。所以BOE相当
 
 > **Contraction mapping theorem**
 >
-> 1. 存在不动点$x^{*},$  使得 $f(x^{*})=x^{*}$
+> 1. 存在不动点$x^\*,$  使得 $f(x^\*)=x^\*$
 > 2. 只要满足，$\left \lVert f(x_1)-f(x_2)\right \rVert \leq \gamma \left \lVert x_1 -x_2 \right \rVert$
 >
 > 定理可以保证：
