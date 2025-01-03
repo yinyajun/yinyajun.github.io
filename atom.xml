@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">BTray</title><subtitle type="html">yajun的学习笔记</subtitle><updated>2025-01-03T14:32:43+00:00</updated><id>https://yinyajun.github.io/</id><link rel="alternate" type="text/html" href="https://yinyajun.github.io/"/><link rel="self" type="application/atom+xml" href="https://yinyajun.github.io/atom.xml"/><author><name>雅俊</name><uri>https://yinyajun.github.io/</uri><email>skyblueice234@gmail.com</email></author><generator uri="https://gohugo.io/" version="0.135.0">Hugo</generator><entry><title type="text">赵世钰《强化学习》复习笔记01</title><link rel="alternate" type="text/html" href="https://yinyajun.github.io/posts/ai/rl/math_rl_note01/"/><id>https://yinyajun.github.io/posts/ai/rl/math_rl_note01/</id><updated>2025-01-03T22:32:25+08:00</updated><published>2023-07-15T15:37:36+00:00</published><author><name>雅俊</name><uri>https://yinyajun.github.io/</uri><email>skyblueice234@gmail.com</email></author><summary type="html">我的强化学习入门课程就是赵世钰老师的&lt;a href="https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning">强化学习&lt;/a>，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。</summary><content type="html">&lt;p>我的强化学习入门课程就是赵世钰老师的&lt;a href="https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning">强化学习&lt;/a>，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">BTray</title><subtitle type="html">yajun的学习笔记</subtitle><updated>2025-01-03T14:44:39+00:00</updated><id>https://yinyajun.github.io/</id><link rel="alternate" type="text/html" href="https://yinyajun.github.io/"/><link rel="self" type="application/atom+xml" href="https://yinyajun.github.io/atom.xml"/><author><name>雅俊</name><uri>https://yinyajun.github.io/</uri><email>skyblueice234@gmail.com</email></author><generator uri="https://gohugo.io/" version="0.135.0">Hugo</generator><entry><title type="text">赵世钰《强化学习》复习笔记01</title><link rel="alternate" type="text/html" href="https://yinyajun.github.io/posts/ai/rl/math_rl_note01/"/><id>https://yinyajun.github.io/posts/ai/rl/math_rl_note01/</id><updated>2025-01-03T22:44:16+08:00</updated><published>2023-07-15T15:37:36+00:00</published><author><name>雅俊</name><uri>https://yinyajun.github.io/</uri><email>skyblueice234@gmail.com</email></author><summary type="html">我的强化学习入门课程就是赵世钰老师的&lt;a href="https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning">强化学习&lt;/a>，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。</summary><content type="html">&lt;p>我的强化学习入门课程就是赵世钰老师的&lt;a href="https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning">强化学习&lt;/a>，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。&lt;/p>
 &lt;h2 id="第一章">第一章&lt;/h2>
 &lt;h3 id="基础概念">基础概念&lt;/h3>
 &lt;table>
@@ -144,7 +144,7 @@ $$&lt;/p>
 &lt;p>这里比较跳的步骤是用了markov的性质，Return只和当前时刻的State有关，和前一个时刻的State无关。&lt;/p>
 &lt;p>随机性在于状态转移的随机。&lt;/p>
 &lt;p>进一步，将MP形式的状态转移可以展开为MDP形式的状态转移&lt;/p>
-&lt;p>$$p(s'|s) = \sum_a p(s'|s,a) \pi(a|s)$$.&lt;/p>
+&lt;p>$$p(s'|s) = \sum_a p(s'|s,a) \pi(a|s).$$&lt;/p>
 &lt;h4 id="小说明">小说明&lt;/h4>
 &lt;p>这章在引入了两次递归定义，一次是在Return的bootstrapping求解，一次在State value的定义。&lt;/p>
 &lt;p>初学的时候，觉得有点混淆，因为这两个好像是同一个东西。它们的区别在于&lt;/p>
@@ -174,22 +174,22 @@ $$
 &lt;p>$p(r|s,a)$和$p(s'|s,a)$是环境model，白盒环境中已知。&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;p>一个简单的变体是&lt;/p>
-&lt;p>$$v_\pi(s) = \sum &lt;em>a \pi(a|s) \sum&lt;/em>{s'}\sum_r p(s',r | s,a)[r + \gamma v_\pi(s')]$$.&lt;/p>
+&lt;p>一个简单的变体是
+$$v_\pi(s) = \sum_a \pi(a|s) \sum_{s'}\sum_r p(s',r | s,a)[r + \gamma v_\pi(s')].$$&lt;/p>
 &lt;h4 id="matrix-vector-form">matrix-vector form&lt;/h4>
 &lt;p>重写bellman方程&lt;/p>
-&lt;p>$$v_\pi(s) = r &lt;em>\pi(s) + \gamma\sum&lt;/em>{s'} p_\pi(s'|s) v_\pi(s')$$&lt;/p>
+&lt;p>$$v_\pi(s) = r_\pi(s) + \gamma\sum_{s'} p_\pi(s'|s) v_\pi(s')$$&lt;/p>
 &lt;p>其中，&lt;/p>
-&lt;p>$$r_\pi(s) = \sum_a \pi(a|s) \sum_r p(r|s,a) r$$,&lt;/p>
-&lt;p>$$p_\pi(s'|s) = \sum_a \pi(a|s)p(s'|s,a)$$&lt;/p>
+&lt;p>$$r_\pi(s) = \sum_a \pi(a|s) \sum_r p(r|s,a) r,$$&lt;/p>
+&lt;p>$$p_\pi(s'|s) = \sum_a \pi(a|s)p(s'|s,a),$$&lt;/p>
 &lt;p>将所有state的方程联立，可得&lt;/p>
-&lt;p>$$v_\pi = r_\pi + \gamma P_\pi v_\pi$$&lt;/p>
+&lt;p>$$v_\pi = r_\pi + \gamma P_\pi v_\pi.$$&lt;/p>
 &lt;h3 id="bellman-equation-solution">Bellman equation solution&lt;/h3>
 &lt;h4 id="closed-form-solution">closed-form solution&lt;/h4>
-&lt;p>$$v_\pi = (I - \gamma P_\pi)^{-1} r_\pi$$.&lt;/p>
+&lt;p>$$v_\pi = (I - \gamma P_\pi)^{-1} r_\pi.$$&lt;/p>
 &lt;ul>
 &lt;li>可逆性，通过圆盘定理估计出所有eigenvalue都大于0，所以可逆。&lt;/li>
-&lt;li>$$(I - \gamma P_\pi)^{-1} = I + \gamma P_\pi + \gamma^2 P_\pi ^ 2 + \dots$$
+&lt;li>$(I - \gamma P_\pi)^{-1} = I + \gamma P_\pi + \gamma^2 P_\pi ^ 2 + \dots$
 &lt;ul>
 &lt;li>可逆矩阵本就有无限项的含义。&lt;/li>
 &lt;li>可逆矩阵太难求了。&lt;/li>
@@ -202,12 +202,12 @@ $$
 &lt;p>$$v_k = v_\pi = (I - \gamma P_\pi)^{-1} r_\pi, \ \text{as } k \rightarrow \infty$$&lt;/p>
 &lt;p>证明方法是$\delta_k = v_k - v_\pi$随着迭代步数增加而趋于0。&lt;/p>
 &lt;h3 id="action-value">Action Value&lt;/h3>
-&lt;p>有了state value的基础，可以介绍action value了。&lt;/p>
+&lt;p>有了State value的基础，可以介绍Action value了。&lt;/p>
 &lt;p>$$q_\pi(s,a) = \mathbb{E}[G_t| S_t =s , A_t =a].$$&lt;/p>
 &lt;p>定义和state value很像，只是依赖于state-action pair.&lt;/p>
 &lt;h4 id="action-value---state-value">Action Value -&amp;gt; State Value&lt;/h4>
-&lt;p>$$v_\pi(s) = \sum_a \pi(a|s) q_\pi(s,a)$$&lt;/p>
 &lt;p>State value是某一state下所有可能Action value的期望。&lt;/p>
+&lt;p>$$v_\pi(s) = \sum_a \pi(a|s) q_\pi(s,a)$$&lt;/p>
 &lt;h4 id="state-value---action-value">State Value -&amp;gt; Action Value&lt;/h4>
 &lt;p>回顾$v_\pi(s)$的展开式&lt;/p>
 &lt;p>$$v_\pi(s) = \sum_a \pi(a|s) \left[\sum_r p(r|s,a)r + \gamma\sum_{s'}p(s'|s,a)v_{\pi}(s')\right]$$&lt;/p>
@@ -218,9 +218,9 @@ $$
 &lt;p>$$q_\pi(s,a) = \sum_r p(r|s,a) r + \gamma \sum_{s'}p(s'|s,a)\sum_{a'} \pi(a'|s')q_\pi(s',a')$$&lt;/p>
 &lt;p>矩阵形式稍微有些麻烦，不方便打，直接看书。矩阵的维度，对于理解上式非常有帮助。&lt;/p>
 &lt;h2 id="第三章">第三章&lt;/h2>
-&lt;p>这章围绕optimal state value&lt;/p>
+&lt;p>这章围绕optimal state value.&lt;/p>
 &lt;h3 id="optimal-policy">Optimal Policy&lt;/h3>
-&lt;p>相比于其他policy，optimal policy在所有state上的state value都是最大的，称之为$\pi ^*$&lt;/p>
+&lt;p>相比于其他policy，optimal policy在所有state上的state value都是最大的，称之为$\pi ^*.$ 我们需要探讨这三点&lt;/p>
 &lt;ul>
 &lt;li>Existence&lt;/li>
 &lt;li>Uniqueness&lt;/li>
@@ -229,20 +229,22 @@ $$
 &lt;h3 id="bellman-optimality-equation-boe">Bellman optimality equation (BOE)&lt;/h3>
 &lt;p>$$v(s) = \max_{\pi}\sum _ a \pi(a|s) q(s,a)$$&lt;/p>
 &lt;p>由于$q(s,a)$中包含了$v(s)$，所以右边求最值的式子中有两个未知量$q(s,a)$和$\pi(a|s)$.&lt;/p>
-&lt;p>先求optimal policy $\pi^*$，&lt;/p>
-&lt;p>$$\pi^&lt;em>(a|s) =
+&lt;p>先求optimal policy $\pi^*,$&lt;/p>
+&lt;p>$$
+\pi^&lt;em>(a|s) =
 \begin{cases}
 1 &amp;amp; \text{if } a = a^&lt;/em> \\
 0 &amp;amp; \text{if } a \neq a^*
-\end{cases}$$&lt;/p>
-&lt;p>其中，$a^* = \arg \max_a q(s, a)$. optimal policy就是找action value最大的动作。&lt;/p>
+\end{cases}
+$$&lt;/p>
+&lt;p>其中，$a^* = \arg \max_a q(s, a).$ Optimal policy就是找action value最大的动作。&lt;/p>
 &lt;p>所以，方程的左右边只有$v$，用矩阵形式可写为&lt;/p>
 &lt;p>$$v = \max_\pi(r_\pi+ \gamma P_\pi v)$$&lt;/p>
-&lt;p>max作用下，右侧只有$v$是变量。所以BOE相当于求解$v= f(v)$.&lt;/p>
+&lt;p>$\pi$在max的作用下将不在是变量，只有$v$是变量。所以BOE相当于求解$v= f(v)$.&lt;/p>
 &lt;blockquote>
 &lt;p>Contraction mapping theorem&lt;/p>
 &lt;ol>
-&lt;li>存在不动点$x^&lt;em>$, 使得$f(x^&lt;/em>)=x*$.&lt;/li>
+&lt;li>存在不动点$x^&lt;em>,$ 使得$$f(x^&lt;/em>)=x^*$&lt;/li>
 &lt;li>只要满足，$|| f(x_1)-f(x_2)||\leq \gamma ||x_1 -x_2||$&lt;/li>
 &lt;/ol>
 &lt;p>定理可以保证：&lt;/p>
@@ -260,7 +262,7 @@ $$
 &lt;li>$r_\pi$和$v$无关&lt;/li>
 &lt;li>$P_\pi$是stochastic matrix，作用下不会超过$v$的最大元素&lt;/li>
 &lt;/ul>
-&lt;p>大概可以认为是$||f(v_1)-f(v_2)||&lt;em>\infty\leq\gamma ||v1-v2||&lt;/em>\infty$. 这样，BOE的右侧函数就是一个Contraction mapping.&lt;/p>
+&lt;p>大概可以认为是$||f(v_1)-f(v_2)||&lt;em>\infty \leq\gamma ||v1-v2||&lt;/em>\infty$. 这样，BOE的右侧函数就是一个Contraction mapping.&lt;/p>
 &lt;h3 id="solving-boe">Solving BOE&lt;/h3>
 &lt;p>BOE就可以利用Contraction mapping theorem来求得optimal state values. 通过下面公式迭代&lt;/p>
 &lt;p>$$v_{k+1} = \max_\pi (r_\pi + \gamma P_\pi v_k), \ \ \ k = 0,1,2,...$$&lt;/p>
