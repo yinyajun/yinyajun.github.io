@@ -5,6 +5,7 @@ categories: [强化学习]
 tags: [西湖大学,赵世钰]
 date: 2023-07-15 15:37:36
 katex: true
+math: true
 summary: 我的强化学习入门课程就是赵世钰老师的[强化学习](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning)，二刷后记录一些复习笔记。这篇是1-3章的复习笔记。
 ---
 
