@@ -292,13 +292,10 @@ $$v(s) = \max_{\pi}\sum _ a \pi(a|s) q(s,a)$$
 
 先求optimal policy $\pi^*$，可得
 
-$$
-\pi^*(a|s) = \\\\
-\begin{cases} 
-1 & \text{if } a = a^* \\
+$$\pi^*(a|s) = \begin{cases} 
+1 & \text{if } a = a^* \\\\
 0 & \text{if } a \neq a^*
-\end{cases}
-$$
+\end{cases}$$
 
 其中，$a^* = \arg \max_a q(s, a).$ Optimal policy就是找action value最大的动作。
 
