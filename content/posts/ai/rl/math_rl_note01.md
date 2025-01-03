@@ -162,7 +162,7 @@ $$
 
 进一步，将MP形式的状态转移可以展开为MDP形式的状态转移
 
-$$p(s'|s) = \sum_a p(s'|s,a) \pi(a|s)$$.
+$$p(s'|s) = \sum_a p(s'|s,a) \pi(a|s).$$
 
 
 
@@ -198,33 +198,32 @@ $$
   
 
 一个简单的变体是
-
-$$v_\pi(s) = \sum _a \pi(a|s) \sum_{s'}\sum_r p(s',r | s,a)[r + \gamma v_\pi(s')]$$.
+$$v_\pi(s) = \sum_a \pi(a|s) \sum_{s'}\sum_r p(s',r | s,a)[r + \gamma v_\pi(s')].$$
 
 #### matrix-vector form
 
 重写bellman方程
 
-$$v_\pi(s) =  r _\pi(s) + \gamma\sum_{s'} p_\pi(s'|s) v_\pi(s')$$
+$$v_\pi(s) = r_\pi(s) + \gamma\sum_{s'} p_\pi(s'|s) v_\pi(s')$$
 
 其中，
 
-$$r_\pi(s) = \sum_a \pi(a|s) \sum_r p(r|s,a) r$$,
+$$r_\pi(s) = \sum_a \pi(a|s) \sum_r p(r|s,a) r,$$
 
-$$p_\pi(s'|s) = \sum_a \pi(a|s)p(s'|s,a)$$
+$$p_\pi(s'|s) = \sum_a \pi(a|s)p(s'|s,a),$$
 
 将所有state的方程联立，可得
 
-$$v_\pi = r_\pi + \gamma P_\pi v_\pi$$
+$$v_\pi = r_\pi + \gamma P_\pi v_\pi.$$
 
 ### Bellman equation solution
 
 #### closed-form solution
 
-$$v_\pi = (I - \gamma P_\pi)^{-1} r_\pi$$.
+$$v_\pi = (I - \gamma P_\pi)^{-1} r_\pi.$$
 
 * 可逆性，通过圆盘定理估计出所有eigenvalue都大于0，所以可逆。
-* $$(I - \gamma P_\pi)^{-1}  = I + \gamma P_\pi + \gamma^2 P_\pi ^ 2 + \dots$$
+* $(I - \gamma P_\pi)^{-1}  = I + \gamma P_\pi + \gamma^2 P_\pi ^ 2 + \dots$
   * 可逆矩阵本就有无限项的含义。
   * 可逆矩阵太难求了。
 
@@ -240,17 +239,17 @@ $$v_k = v_\pi = (I  - \gamma P_\pi)^{-1} r_\pi, \ \text{as  } k \rightarrow \inf
 
 ### Action Value
 
-有了state value的基础，可以介绍action value了。
+有了State value的基础，可以介绍Action value了。
 
 $$q_\pi(s,a) = \mathbb{E}[G_t| S_t =s , A_t =a].$$
 
 定义和state value很像，只是依赖于state-action pair.
 
 #### Action Value -> State Value
+State value是某一state下所有可能Action value的期望。
 
 $$v_\pi(s) = \sum_a \pi(a|s) q_\pi(s,a)$$
 
-State value是某一state下所有可能Action value的期望。
 
 #### State Value -> Action Value
 
@@ -272,13 +271,13 @@ $$q_\pi(s,a) = \sum_r p(r|s,a) r + \gamma \sum_{s'}p(s'|s,a)\sum_{a'} \pi(a'|s')
 
 ## 第三章
 
-这章围绕optimal state value
+这章围绕optimal state value.
 
 
 
 ### Optimal Policy
 
-相比于其他policy，optimal policy在所有state上的state value都是最大的，称之为$\pi ^*$
+相比于其他policy，optimal policy在所有state上的state value都是最大的，称之为$\pi ^*.$ 我们需要探讨这三点
 
 * Existence
 * Uniqueness
@@ -292,25 +291,27 @@ $$v(s) = \max_{\pi}\sum _ a \pi(a|s) q(s,a)$$
 
 由于$q(s,a)$中包含了$v(s)$，所以右边求最值的式子中有两个未知量$q(s,a)$和$\pi(a|s)$.
 
-先求optimal policy $\pi^*$，
+先求optimal policy $\pi^*,$
 
-$$\pi^*(a|s) = 
+$$
+\pi^*(a|s) = 
 \begin{cases} 
 1 & \text{if } a = a^* \\\\
 0 & \text{if } a \neq a^*
-\end{cases}$$
+\end{cases}
+$$
 
-其中，$a^* = \arg \max_a q(s, a)$. optimal policy就是找action value最大的动作。
+其中，$a^* = \arg \max_a q(s, a).$ Optimal policy就是找action value最大的动作。
 
 所以，方程的左右边只有$v$，用矩阵形式可写为
 
 $$v = \max_\pi(r_\pi+ \gamma P_\pi v)$$
 
-max作用下，右侧只有$v$是变量。所以BOE相当于求解$v= f(v)$.
+$\pi$在max的作用下将不在是变量，只有$v$是变量。所以BOE相当于求解$v= f(v)$.
 
 > Contraction mapping theorem
 >
-> 1. 存在不动点$x^*$, 使得$f(x^*)=x*$.
+> 1. 存在不动点$x^*,$ 使得$$f(x^*)=x^*$
 > 2. 只要满足，$|| f(x_1)-f(x_2)||\leq \gamma ||x_1 -x_2||$
 >
 > 定理可以保证：
@@ -329,7 +330,7 @@ max作用下，右侧只有$v$是变量。所以BOE相当于求解$v= f(v)$.
 * $r_\pi$和$v$无关
 * $P_\pi$是stochastic matrix，作用下不会超过$v$的最大元素
 
-大概可以认为是$||f(v_1)-f(v_2)||_\infty\leq\gamma ||v1-v2||_\infty$. 这样，BOE的右侧函数就是一个Contraction mapping.
+大概可以认为是$||f(v_1)-f(v_2)||_\infty \leq\gamma ||v1-v2||_\infty$. 这样，BOE的右侧函数就是一个Contraction mapping.
 
 ### Solving BOE
 
