@@ -293,9 +293,9 @@ $$v(s) = \max_{\pi}\sum _ a \pi(a|s) q(s,a)$$
 先求optimal policy $\pi^*$，可得
 
 $$
-\pi^*(a|s) = 
+\pi^*(a|s) = \\\\
 \begin{cases} 
-1 & \text{if } a = a^* \\\\
+1 & \text{if } a = a^* \\
 0 & \text{if } a \neq a^*
 \end{cases}
 $$
