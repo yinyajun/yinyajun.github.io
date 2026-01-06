@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://yinyajun.github.io"
-title = "BTray"
+title = "Yin记"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 
